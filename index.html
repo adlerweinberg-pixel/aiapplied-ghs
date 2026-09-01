@@ -4,629 +4,890 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AI Applied | Greenwich High School</title>
+  <meta name="description" content="A hands-on AI club at Greenwich High School. Every session you build something real and leave with a skill you can use the next day." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Newsreader:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
   <style>
 
     /* ═══════════════════════════════════════
        DESIGN SYSTEM
+       Two materials: SCREEN (the club's own
+       voice) and PAPER (the old way).
+       Palette sampled from the club logo.
        ═══════════════════════════════════════ */
     :root {
-      /* Color */
-      --color-bg:         #F6F5F1;
-      --color-surface:    #FFFFFF;
-      --color-border:     #E4E3DE;
-      --color-border-mid: #D0CFC8;
-      --color-text:       #18171F;
-      --color-text-mid:   #6A6978;
-      --color-text-dim:   #9E9DAB;
-      --color-accent:     #4B63E8;
-      --color-accent-bg:  rgba(75,99,232,0.08);
-      --color-accent-alt: #2AB593;
+      /* Screen material */
+      --ink:          #05091F;
+      --ink-raise:    #0C1433;
+      --ink-line:     #1B2751;
+      --on-ink:       #E8ECF7;
+      --on-ink-mid:   #97A2C4;
+      --on-ink-dim:   #626D91;
 
-      /* Radius — 3 values only */
-      --r-sm:  6px;
-      --r-md:  10px;
-      --r-lg:  16px;
+      /* Paper material */
+      --paper:        #EFF1F7;
+      --paper-raise:  #FFFFFF;
+      --paper-line:   #D5DAE8;
+      --rule:         rgba(31,58,124,0.07);
+      --on-paper:     #10152B;
+      --on-paper-mid: #535B78;
+      --on-paper-dim: #8A91A8;
 
-      /* Spacing — 4px base */
-      --s-1:  4px;  --s-2:  8px;  --s-3:  12px;
-      --s-4:  16px; --s-5:  20px; --s-6:  24px;
-      --s-8:  32px; --s-10: 40px; --s-12: 48px;
-      --s-16: 64px; --s-20: 80px; --s-24: 96px;
+      /* Signal (logo circuit blue) */
+      --signal:       #2E7DF0;
+      --signal-lit:   #5AAEFF;
+      --signal-wash:  rgba(46,125,240,0.10);
 
-      /* Type scale */
-      --t-2xs: 10px; --t-xs: 11px; --t-sm: 13px;
-      --t-base: 15px; --t-lg: 17px;
-      --t-xl: 22px; --t-2xl: 28px;
-      --t-display-sm: clamp(32px, 4vw, 46px);
-      --t-display:    clamp(46px, 7vw, 82px);
+      /* Cardinal (GHS). Hairlines and negatives only. */
+      --cardinal:     #C8434B;
 
-      /* Weight */
-      --w-regular:  400;
-      --w-medium:   500;
-      --w-semibold: 600;
-      --w-bold:     700;
+      /* Type */
+      --font-ui:    'Space Grotesk', system-ui, sans-serif;
+      --font-mono:  'JetBrains Mono', ui-monospace, monospace;
+      --font-old:   'Newsreader', Georgia, serif;
 
-      /* Shadow */
-      --shadow-sm: 0 1px 3px rgba(24,23,31,0.06), 0 2px 8px rgba(24,23,31,0.04);
-      --shadow-md: 0 4px 12px rgba(24,23,31,0.08), 0 12px 28px rgba(24,23,31,0.06);
+      --t-display: clamp(38px, 7vw, 82px);
+      --t-h2:      clamp(29px, 4.4vw, 50px);
+      --t-h3:      20px;
+      --t-body:    16.5px;
+      --t-sm:      14.5px;
+      --t-mono:    12px;
+      --t-mono-sm: 11px;
 
-      /* Animation */
-      --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
-      --ease-inout:  cubic-bezier(0.4, 0, 0.2, 1);
-      --dur-fast:    140ms;
-      --dur-base:    220ms;
-      --dur-slow:    380ms;
+      /* Spacing, 4px base */
+      --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px;
+      --s-5: 20px; --s-6: 24px; --s-8: 32px; --s-10: 40px;
+      --s-12: 48px; --s-16: 64px; --s-20: 80px; --s-24: 96px;
+
+      --r-sm: 4px;
+      --r-md: 8px;
+      --r-lg: 14px;
+
+      --ease:      cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-io:   cubic-bezier(0.4, 0, 0.2, 1);
+      --dur-fast:  140ms;
+      --dur-base:  240ms;
+      --dur-slow:  520ms;
+
+      --maxw: 1080px;
+      --pad-x: clamp(var(--s-5), 5vw, var(--s-16));
     }
 
     /* ═══════════════════════════════════════
        RESET & BASE
        ═══════════════════════════════════════ */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; }
 
     body {
-      background: var(--color-bg);
-      color: var(--color-text);
-      font-family: 'Inter', sans-serif;
-      font-size: var(--t-base);
-      font-weight: var(--w-regular);
-      line-height: 1.6;
+      background: var(--ink);
+      color: var(--on-ink);
+      font-family: var(--font-ui);
+      font-size: var(--t-body);
+      font-weight: 400;
+      line-height: 1.65;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    a { color: inherit; }
+
+    :focus-visible {
+      outline: 2px solid var(--signal-lit);
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
+
+    ::selection { background: var(--signal); color: #fff; }
+
+    /* ═══════════════════════════════════════
+       MATERIALS
+       ═══════════════════════════════════════ */
+    .screen { background: var(--ink); color: var(--on-ink); }
+
+    .paper {
+      background: var(--paper);
+      color: var(--on-paper);
+      position: relative;
+    }
+
+    /* Notebook rule. Reserved for the sections that
+       explain, not used as general wallpaper. */
+    .paper.ruled {
+      background-image: repeating-linear-gradient(
+        to bottom, transparent 0 31px, var(--rule) 31px 32px);
+    }
+    /* The red margin line real school paper has. */
+    .paper.ruled::before {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      left: clamp(var(--s-3), 3.2vw, var(--s-10));
+      width: 1px;
+      background: var(--cardinal);
+      opacity: 0.30;
+    }
+
+    .container {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: clamp(var(--s-16), 9vw, var(--s-24)) var(--pad-x);
+      position: relative;
     }
 
     /* ═══════════════════════════════════════
-       NAV
+       SHARED TYPE
        ═══════════════════════════════════════ */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0;
-      height: 60px;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 clamp(var(--s-4), 5vw, var(--s-16));
-      background: rgba(246,245,241,0.94);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--color-border);
-      z-index: 100;
-      transition: box-shadow var(--dur-base) var(--ease-inout);
-    }
-    nav.elevated { box-shadow: var(--shadow-sm); }
-
-    .nav-logo {
-      font-weight: var(--w-bold);
-      font-size: var(--t-lg);
-      color: var(--color-text);
-      text-decoration: none;
-      letter-spacing: -0.025em;
-    }
-    .nav-logo span { color: var(--color-accent); }
-
-    .nav-links { display: flex; align-items: center; gap: var(--s-1); list-style: none; }
-    .nav-links a {
-      font-size: var(--t-sm);
-      font-weight: var(--w-medium);
-      color: var(--color-text-mid);
-      text-decoration: none;
-      padding: var(--s-2) var(--s-3);
-      border-radius: var(--r-sm);
-      transition: color var(--dur-fast) var(--ease-inout),
-                  background var(--dur-fast) var(--ease-inout);
-    }
-    .nav-links a:hover { color: var(--color-text); background: var(--color-border); }
-
-    .nav-apply {
-      background: var(--color-accent) !important;
-      color: #fff !important;
-      border-radius: var(--r-md) !important;
-      padding: var(--s-2) var(--s-4) !important;
-      margin-left: var(--s-3);
-      transition: background var(--dur-fast) var(--ease-inout),
-                  box-shadow var(--dur-fast) var(--ease-inout) !important;
-    }
-    .nav-apply:hover {
-      background: #3d54d4 !important;
-      box-shadow: 0 4px 12px rgba(75,99,232,0.28) !important;
-    }
-
-    /* ═══════════════════════════════════════
-       HERO
-       ═══════════════════════════════════════ */
-    #hero {
-      display: flex; flex-direction: column; justify-content: center;
-      padding: 72px clamp(var(--s-4), 5vw, var(--s-16)) var(--s-10);
-    }
-    .hero-inner {
-      max-width: 1060px; margin: 0 auto; width: 100%;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: clamp(var(--s-8), 6vw, var(--s-16));
-      align-items: center;
-    }
-    .hero-copy { min-width: 0; }
-    .hero-logo {
-      width: clamp(200px, 22vw, 320px);
-      aspect-ratio: 1;
-      border-radius: var(--r-lg);
-      overflow: hidden;
-      flex-shrink: 0;
-      box-shadow: var(--shadow-md);
-    }
-    .hero-logo img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .hero-tag {
-      display: inline-flex; align-items: center;
-      font-size: var(--t-xs);
-      font-weight: var(--w-semibold);
-      letter-spacing: 0.11em;
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: var(--t-mono-sm);
+      font-weight: 500;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: var(--color-accent);
-      background: var(--color-accent-bg);
-      padding: var(--s-1) var(--s-3);
-      border-radius: var(--r-sm);
-      margin-bottom: var(--s-6);
-      opacity: 0; transform: translateY(12px);
-      animation: fadeUp var(--dur-slow) var(--ease-out) 80ms forwards;
+      color: var(--signal);
+      display: flex;
+      align-items: center;
+      gap: var(--s-3);
+      margin-bottom: var(--s-5);
+    }
+    .eyebrow::after {
+      content: '';
+      height: 1px;
+      flex: 1;
+      max-width: 64px;
+      background: currentColor;
+      opacity: 0.35;
+    }
+    .eyebrow.centered { justify-content: center; }
+    .eyebrow.centered::before {
+      content: '';
+      height: 1px; flex: 1; max-width: 64px;
+      background: currentColor; opacity: 0.35;
     }
 
-    h1 {
-      font-family: 'Instrument Serif', serif;
-      font-weight: var(--w-regular);
-      font-size: var(--t-display);
-      line-height: 1.04;
-      letter-spacing: -0.025em;
-      max-width: 720px;
-      opacity: 0; transform: translateY(16px);
-      animation: fadeUp var(--dur-slow) var(--ease-out) 180ms forwards;
-    }
-    h1 em { font-style: italic; color: var(--color-accent); }
-
-    .hero-body {
-      margin-top: var(--s-6);
-      font-size: var(--t-lg);
-      line-height: 1.65;
-      color: var(--color-text-mid);
-      max-width: 460px;
-      opacity: 0; transform: translateY(12px);
-      animation: fadeUp var(--dur-slow) var(--ease-out) 280ms forwards;
+    h1, h2, h3, h4 {
+      font-family: var(--font-ui);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.02;
     }
 
-    .hero-actions {
-      margin-top: var(--s-10);
-      display: flex; gap: var(--s-3); align-items: center;
-      opacity: 0; transform: translateY(12px);
-      animation: fadeUp var(--dur-slow) var(--ease-out) 360ms forwards;
+    h2 {
+      font-size: var(--t-h2);
+      max-width: 19ch;
+      text-wrap: balance;
     }
+    h2 .lit { color: var(--signal); }
+    .screen h2 .lit { color: var(--signal-lit); }
+
+    .lede {
+      margin-top: var(--s-5);
+      font-size: var(--t-body);
+      line-height: 1.7;
+      max-width: 52ch;
+      color: var(--on-paper-mid);
+    }
+    .screen .lede { color: var(--on-ink-mid); }
+
+    .section-head { margin-bottom: clamp(var(--s-10), 5vw, var(--s-16)); }
+    .section-head.centered { text-align: center; }
+    .section-head.centered h2 { margin-inline: auto; }
+    .section-head.centered .lede { margin-inline: auto; }
 
     /* ═══════════════════════════════════════
-       BUTTONS (shared)
+       BUTTONS
        ═══════════════════════════════════════ */
     .btn {
-      display: inline-flex; align-items: center;
-      font-family: 'Inter', sans-serif;
-      font-size: var(--t-sm);
-      font-weight: var(--w-semibold);
+      display: inline-flex;
+      align-items: center;
+      gap: var(--s-2);
+      font-family: var(--font-mono);
+      font-size: var(--t-mono);
+      font-weight: 500;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
       text-decoration: none;
+      padding: 13px var(--s-6);
       border-radius: var(--r-md);
-      padding: 11px var(--s-6);
       border: 1px solid transparent;
       cursor: pointer;
-      transition: background var(--dur-fast) var(--ease-inout),
-                  box-shadow var(--dur-fast) var(--ease-inout),
-                  transform var(--dur-fast) var(--ease-inout),
-                  color var(--dur-fast) var(--ease-inout),
-                  border-color var(--dur-fast) var(--ease-inout);
+      transition: background var(--dur-fast) var(--ease-io),
+                  border-color var(--dur-fast) var(--ease-io),
+                  color var(--dur-fast) var(--ease-io),
+                  transform var(--dur-fast) var(--ease-io),
+                  box-shadow var(--dur-fast) var(--ease-io);
     }
     .btn:hover { transform: translateY(-2px); }
     .btn:active { transform: translateY(0); transition-duration: 60ms; }
 
     .btn-primary {
-      background: var(--color-accent);
+      background: var(--signal);
       color: #fff;
-      box-shadow: 0 2px 8px rgba(75,99,232,0.22);
+      box-shadow: 0 0 0 1px rgba(90,174,255,0.35), 0 6px 20px rgba(46,125,240,0.30);
     }
     .btn-primary:hover {
-      background: #3d54d4;
-      box-shadow: 0 4px 14px rgba(75,99,232,0.32);
+      background: var(--signal-lit);
+      color: var(--ink);
+      box-shadow: 0 0 0 1px rgba(90,174,255,0.55), 0 10px 28px rgba(46,125,240,0.42);
     }
 
-    .btn-secondary {
-      background: var(--color-surface);
-      color: var(--color-text-mid);
-      border-color: var(--color-border);
+    .btn-ghost {
+      color: var(--on-ink-mid);
+      border-color: var(--ink-line);
+      background: transparent;
     }
-    .btn-secondary:hover {
-      color: var(--color-text);
-      border-color: var(--color-border-mid);
-      box-shadow: var(--shadow-sm);
-    }
+    .btn-ghost:hover { color: var(--on-ink); border-color: var(--signal); }
+
+    .paper .btn-ghost { color: var(--on-paper-mid); border-color: var(--paper-line); }
+    .paper .btn-ghost:hover { color: var(--on-paper); border-color: var(--signal); }
 
     /* ═══════════════════════════════════════
-       TICKER
+       NAV
        ═══════════════════════════════════════ */
-    .ticker-wrap {
-      border-top: 1px solid var(--color-border);
-      border-bottom: 1px solid var(--color-border);
-      background: var(--color-surface);
-      overflow: hidden;
-      padding: var(--s-4) 0;
-    }
-    .ticker {
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 62px;
       display: flex;
-      animation: ticker 26s linear infinite;
-      white-space: nowrap;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--pad-x);
+      background: rgba(5,9,31,0.82);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid transparent;
+      z-index: 100;
+      transition: border-color var(--dur-base) var(--ease-io),
+                  background var(--dur-base) var(--ease-io);
     }
-    .ticker-item {
-      display: flex; align-items: center; gap: var(--s-4);
-      font-size: var(--t-xs);
-      font-weight: var(--w-semibold);
-      letter-spacing: 0.12em;
+    nav.elevated {
+      border-bottom-color: var(--ink-line);
+      background: rgba(5,9,31,0.94);
+    }
+
+    .nav-mark {
+      display: flex;
+      align-items: center;
+      gap: var(--s-3);
+      text-decoration: none;
+      font-family: var(--font-mono);
+      font-size: var(--t-mono);
+      font-weight: 700;
+      letter-spacing: 0.13em;
       text-transform: uppercase;
-      color: var(--color-text-dim);
-      padding: 0 var(--s-10);
+      color: var(--on-ink);
     }
-    .ticker-item::after {
-      content: '';
-      width: 3px; height: 3px;
-      background: var(--color-accent);
+    .nav-mark .dot {
+      width: 7px; height: 7px;
       border-radius: 50%;
+      background: var(--signal-lit);
+      box-shadow: 0 0 0 3px rgba(90,174,255,0.16);
       flex-shrink: 0;
     }
-    @keyframes ticker {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: var(--s-1);
+      list-style: none;
     }
-
-    /* ═══════════════════════════════════════
-       SECTION SHARED
-       ═══════════════════════════════════════ */
-    section { position: relative; }
-
-    .container {
-      max-width: 1060px;
-      margin: 0 auto;
-      padding: clamp(var(--s-12), 8vw, var(--s-24)) clamp(var(--s-4), 5vw, var(--s-16));
-    }
-
-    .section-label {
-      font-size: var(--t-xs);
-      font-weight: var(--w-semibold);
-      letter-spacing: 0.12em;
+    .nav-links a {
+      font-family: var(--font-mono);
+      font-size: var(--t-mono-sm);
+      font-weight: 400;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--color-accent);
-      margin-bottom: var(--s-4);
+      color: var(--on-ink-dim);
+      text-decoration: none;
+      padding: var(--s-2) var(--s-3);
+      border-radius: var(--r-sm);
+      transition: color var(--dur-fast) var(--ease-io);
     }
+    .nav-links a:hover { color: var(--on-ink); }
 
-    h2 {
-      font-family: 'Instrument Serif', serif;
-      font-weight: var(--w-regular);
-      font-size: var(--t-display-sm);
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-      color: var(--color-text);
+    .nav-follow {
+      margin-left: var(--s-4);
+      padding: 9px var(--s-4) !important;
+      color: var(--signal-lit) !important;
+      border: 1px solid var(--ink-line);
+      transition: border-color var(--dur-fast) var(--ease-io),
+                  background var(--dur-fast) var(--ease-io) !important;
     }
-    h2 em { font-style: italic; color: var(--color-accent); }
-
-    .section-body {
-      margin-top: var(--s-4);
-      font-size: var(--t-base);
-      line-height: 1.7;
-      color: var(--color-text-mid);
-      max-width: 480px;
-    }
+    .nav-follow:hover { border-color: var(--signal); background: var(--signal-wash); }
 
     /* ═══════════════════════════════════════
-       ABOUT
+       HERO
        ═══════════════════════════════════════ */
-    #about {
-      background: var(--color-surface);
-      border-top: 1px solid var(--color-border);
-      border-bottom: 1px solid var(--color-border);
+    #hero {
+      position: relative;
+      overflow: hidden;
+      padding: calc(62px + clamp(var(--s-16), 8vw, var(--s-24))) var(--pad-x) clamp(var(--s-16), 8vw, var(--s-24));
     }
-    .about-grid {
+    /* Faint circuit trace echoing the logo's board lines. */
+    #hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(to right, var(--ink-line) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--ink-line) 1px, transparent 1px);
+      background-size: 72px 72px;
+      opacity: 0.30;
+      mask-image: radial-gradient(115% 85% at 78% 42%, #000 0%, transparent 68%);
+      -webkit-mask-image: radial-gradient(115% 85% at 78% 42%, #000 0%, transparent 68%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: var(--maxw);
+      margin: 0 auto;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
+      grid-template-columns: minmax(0, 1fr) auto;
       gap: clamp(var(--s-10), 6vw, var(--s-20));
       align-items: center;
+      position: relative;
     }
-    .about-copy p {
-      color: var(--color-text-mid);
-      line-height: 1.75;
-      font-size: var(--t-base);
-    }
-    .about-copy p + p { margin-top: var(--s-3); }
-    .about-copy strong { color: var(--color-text); font-weight: var(--w-semibold); }
 
-    .stat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 160px), 1fr)); gap: var(--s-4); }
-    .stat-card {
-      background: var(--color-bg);
-      border: 1px solid var(--color-border);
+    .hero-meta {
+      font-family: var(--font-mono);
+      font-size: var(--t-mono-sm);
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--on-ink-dim);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--s-3);
+      margin-bottom: var(--s-8);
+    }
+    .hero-meta .sep { color: var(--ink-line); }
+    .hero-meta .status {
+      color: var(--signal-lit);
+      display: inline-flex;
+      align-items: center;
+      gap: var(--s-2);
+    }
+    .hero-meta .status::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--signal-lit);
+      animation: pulse 2.6s var(--ease-io) infinite;
+    }
+
+    h1 {
+      font-size: var(--t-display);
+      line-height: 0.98;
+      max-width: 21ch;
+      text-wrap: balance;
+    }
+    h1 .dim { color: var(--on-ink-dim); }
+    h1 .lit { color: var(--signal-lit); }
+
+    .hero-body {
+      margin-top: var(--s-8);
+      font-size: 17px;
+      line-height: 1.7;
+      color: var(--on-ink-mid);
+      max-width: 50ch;
+    }
+
+    .hero-actions {
+      margin-top: var(--s-10);
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--s-3);
+      align-items: center;
+    }
+
+    .hero-logo {
+      width: clamp(190px, 24vw, 310px);
+      aspect-ratio: 1;
       border-radius: var(--r-lg);
-      padding: var(--s-8) var(--s-6);
-      transition: box-shadow var(--dur-base) var(--ease-out),
-                  transform var(--dur-base) var(--ease-out);
+      overflow: hidden;
+      flex-shrink: 0;
+      border: 1px solid var(--ink-line);
+      box-shadow: 0 0 0 1px rgba(90,174,255,0.10),
+                  0 30px 70px rgba(0,0,0,0.55),
+                  0 0 90px rgba(46,125,240,0.18);
     }
-    .stat-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+    .hero-logo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-    .stat-num {
-      font-family: 'Instrument Serif', serif;
-      font-size: 40px;
-      line-height: 1;
-      color: var(--color-accent);
-    }
-    .stat-desc {
-      margin-top: var(--s-2);
-      font-size: var(--t-sm);
-      font-weight: var(--w-medium);
-      color: var(--color-text-mid);
+    /* Hero load sequence */
+    .rise { opacity: 0; transform: translateY(14px); animation: rise var(--dur-slow) var(--ease) forwards; }
+    .d1 { animation-delay: 60ms; }
+    .d2 { animation-delay: 160ms; }
+    .d3 { animation-delay: 280ms; }
+    .d4 { animation-delay: 380ms; }
+    .d5 { animation-delay: 200ms; }
+
+    @keyframes rise { to { opacity: 1; transform: translateY(0); } }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%      { opacity: 0.35; transform: scale(0.82); }
     }
 
     /* ═══════════════════════════════════════
-       PILLARS
+       ABOUT  (paper prose beside a screen spec)
        ═══════════════════════════════════════ */
-    .pillars-header { text-align: center; margin-bottom: var(--s-12); }
-    .pillars-header .section-label { justify-content: center; }
-    .pillars-header h2 { max-width: 520px; margin: 0 auto; }
-    .pillars-header .section-body { margin: var(--s-4) auto 0; text-align: center; }
-
-    .pillars-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap: var(--s-5); }
-    .pillar {
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-radius: var(--r-lg);
-      padding: var(--s-8) var(--s-8);
-      transition: box-shadow var(--dur-base) var(--ease-out),
-                  transform var(--dur-base) var(--ease-out);
+    .about-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+      gap: clamp(var(--s-10), 6vw, var(--s-16));
+      align-items: start;
     }
-    .pillar:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+    .about-copy p {
+      color: var(--on-paper-mid);
+      line-height: 1.8;
+      max-width: 48ch;
+    }
+    .about-copy p + p { margin-top: var(--s-5); }
+    .about-copy strong { color: var(--on-paper); font-weight: 600; }
+    .about-copy > p:first-of-type { margin-top: var(--s-6); }
 
-    .pillar-num {
-      font-size: var(--t-xs);
-      font-weight: var(--w-semibold);
-      letter-spacing: 0.1em;
-      color: var(--color-text-dim);
+    /* The spec sheet replaces stat cards: more facts, less decoration. */
+    .spec {
+      background: var(--ink);
+      border: 1px solid var(--ink-line);
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(16,21,43,0.16);
+    }
+    .spec-bar {
+      display: flex;
+      align-items: center;
+      gap: var(--s-2);
+      padding: var(--s-3) var(--s-5);
+      border-bottom: 1px solid var(--ink-line);
+      font-family: var(--font-mono);
+      font-size: var(--t-mono-sm);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--on-ink-dim);
+    }
+    .spec-bar .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ink-line); }
+    .spec-bar .label { margin-left: var(--s-3); }
+
+    .spec-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: var(--s-4);
+      align-items: baseline;
+      padding: var(--s-4) var(--s-5);
+      border-bottom: 1px solid var(--ink-line);
+      font-family: var(--font-mono);
+      font-size: var(--t-mono);
+    }
+    .spec-row:last-child { border-bottom: none; }
+    .spec-key {
+      color: var(--on-ink-dim);
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+    .spec-val { color: var(--on-ink); text-align: right; font-weight: 500; }
+    .spec-val.hot { color: var(--signal-lit); }
+
+    /* ═══════════════════════════════════════
+       PILLARS  (three, not a sequence, so no numbering)
+       ═══════════════════════════════════════ */
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+      gap: var(--s-5);
+    }
+    .pillar {
+      background: var(--paper-raise);
+      border: 1px solid var(--paper-line);
+      border-radius: var(--r-lg);
+      padding: var(--s-8);
+      position: relative;
+      transition: border-color var(--dur-base) var(--ease),
+                  transform var(--dur-base) var(--ease),
+                  box-shadow var(--dur-base) var(--ease);
+    }
+    .pillar:hover {
+      border-color: var(--signal);
+      transform: translateY(-3px);
+      box-shadow: 0 16px 40px rgba(16,21,43,0.10);
+    }
+    .pillar-tag {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: var(--t-mono-sm);
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--signal);
       margin-bottom: var(--s-6);
     }
     .pillar h3 {
-      font-family: 'Instrument Serif', serif;
-      font-weight: var(--w-regular);
-      font-size: var(--t-xl);
-      line-height: 1.2;
+      font-size: var(--t-h3);
       margin-bottom: var(--s-3);
+      letter-spacing: -0.02em;
     }
-    .pillar p {
-      font-size: var(--t-sm);
-      line-height: 1.7;
-      color: var(--color-text-mid);
-    }
+    .pillar p { font-size: var(--t-sm); line-height: 1.72; color: var(--on-paper-mid); }
 
     /* ═══════════════════════════════════════
-       BASICS
+       BASICS  (signature: each card is the
+       interface it teaches)
        ═══════════════════════════════════════ */
-    #basics {
-      background: var(--color-surface);
-      border-top: 1px solid var(--color-border);
-      border-bottom: 1px solid var(--color-border);
+    .basics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+      gap: var(--s-5);
     }
-    .basics-header { text-align: center; margin-bottom: var(--s-12); }
-    .basics-header h2 { max-width: 600px; margin: 0 auto; }
-    .basics-header .section-body { margin: var(--s-4) auto 0; text-align: center; }
-
-    .basics-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap: var(--s-4); }
-    .basics-card {
-      background: var(--color-bg);
-      border: 1px solid var(--color-border);
+    .basic {
+      background: var(--ink-raise);
+      border: 1px solid var(--ink-line);
       border-radius: var(--r-lg);
-      padding: var(--s-8) var(--s-6);
-      transition: box-shadow var(--dur-base) var(--ease-out),
-                  transform var(--dur-base) var(--ease-out);
+      padding: var(--s-6);
+      display: flex;
+      flex-direction: column;
+      gap: var(--s-5);
+      transition: border-color var(--dur-base) var(--ease),
+                  transform var(--dur-base) var(--ease);
     }
-    .basics-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+    .basic:hover { border-color: var(--signal); transform: translateY(-3px); }
+    .basic h3 { font-size: 17px; letter-spacing: -0.02em; }
+    .basic p { font-size: var(--t-sm); line-height: 1.7; color: var(--on-ink-mid); }
 
-    .basics-icon {
+    /* The artifact sits at the top of each card. */
+    .art {
+      height: 124px;
+      border-radius: var(--r-md);
+      background: var(--ink);
+      border: 1px solid var(--ink-line);
+      overflow: hidden;
+      font-family: var(--font-mono);
+      font-size: var(--t-mono-sm);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+    }
+    .art-bar {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 7px var(--s-3);
+      border-bottom: 1px solid var(--ink-line);
+      flex-shrink: 0;
+    }
+    .art-bar i { width: 6px; height: 6px; border-radius: 50%; background: var(--ink-line); }
+    .art-bar span {
+      margin-left: var(--s-2);
+      color: var(--on-ink-dim);
+      letter-spacing: 0.1em;
+      font-size: 9.5px;
+      text-transform: uppercase;
+    }
+    .art-body { padding: var(--s-3); flex: 1; min-height: 0; }
+
+    /* 1. Terminal */
+    .art .prompt { color: var(--signal-lit); }
+    .art .cmd { color: var(--on-ink); }
+    .art .out { color: var(--on-ink-dim); }
+    .art .line + .line { margin-top: 4px; }
+    .caret {
       display: inline-block;
-      font-family: 'Inter', monospace;
-      font-size: var(--t-sm);
-      font-weight: var(--w-semibold);
-      color: var(--color-accent);
-      background: var(--color-accent-bg);
-      padding: var(--s-2) var(--s-3);
-      border-radius: var(--r-sm);
-      margin-bottom: var(--s-5);
-      letter-spacing: 0;
+      width: 7px; height: 12px;
+      background: var(--signal-lit);
+      vertical-align: -2px;
+      margin-left: 2px;
+      animation: blink 1.05s steps(1) infinite;
     }
-    .basics-card h3 {
-      font-size: var(--t-base);
-      font-weight: var(--w-semibold);
-      margin-bottom: var(--s-2);
+    @keyframes blink { 50% { opacity: 0; } }
+
+    /* 2. Finder */
+    .row {
+      display: flex;
+      align-items: center;
+      gap: var(--s-2);
+      padding: 3px var(--s-1);
+      border-radius: 3px;
+      color: var(--on-ink-mid);
+      transition: background var(--dur-fast) var(--ease-io), color var(--dur-fast) var(--ease-io);
     }
-    .basics-card p {
-      font-size: var(--t-sm);
-      line-height: 1.7;
-      color: var(--color-text-mid);
+    .basic:hover .row.sel { background: var(--signal-wash); color: var(--on-ink); }
+    .row .ic { color: var(--signal); flex-shrink: 0; }
+
+    /* 3. File paths */
+    .crumbs { display: flex; flex-wrap: wrap; align-items: center; gap: 3px; }
+    .crumb {
+      padding: 3px 6px;
+      border-radius: 3px;
+      background: rgba(255,255,255,0.035);
+      color: var(--on-ink-mid);
+      transition: background var(--dur-base) var(--ease-io),
+                  color var(--dur-base) var(--ease-io);
     }
+    .basic:hover .crumb { background: var(--signal-wash); color: var(--signal-lit); }
+    .basic:hover .crumb:nth-child(2) { transition-delay: 60ms; }
+    .basic:hover .crumb:nth-child(4) { transition-delay: 120ms; }
+    .basic:hover .crumb:nth-child(6) { transition-delay: 180ms; }
+    .slash { color: var(--on-ink-dim); }
+
+    /* 4. Keycaps */
+    .keys { display: flex; align-items: center; gap: var(--s-2); height: 100%; }
+    .cap {
+      min-width: 34px; height: 34px;
+      display: grid; place-items: center;
+      padding: 0 var(--s-2);
+      border-radius: 6px;
+      background: linear-gradient(180deg, #16204A 0%, #0D1531 100%);
+      border: 1px solid var(--ink-line);
+      box-shadow: 0 2px 0 var(--ink-line);
+      color: var(--on-ink);
+      font-size: var(--t-mono);
+      font-weight: 500;
+      transition: transform var(--dur-fast) var(--ease-io),
+                  box-shadow var(--dur-fast) var(--ease-io),
+                  color var(--dur-fast) var(--ease-io);
+    }
+    .basic:hover .cap {
+      transform: translateY(2px);
+      box-shadow: 0 0 0 var(--ink-line);
+      color: var(--signal-lit);
+    }
+    .basic:hover .cap:nth-child(2) { transition-delay: 50ms; }
+    .basic:hover .cap:nth-child(3) { transition-delay: 100ms; }
+    .plus { color: var(--on-ink-dim); }
+
+    /* 5. Editor */
+    .code { display: grid; grid-template-columns: 18px 1fr; gap: 0 var(--s-3); }
+    .ln { color: var(--on-ink-dim); opacity: 0.6; text-align: right; }
+    .tk-key { color: var(--signal-lit); }
+    .tk-str { color: #7BD3A8; }
+    .tk-fn  { color: var(--on-ink); }
+    .tk-com { color: var(--on-ink-dim); }
+
+    /* 6. Inspector */
+    .inspect { position: relative; height: 100%; display: grid; place-items: center; }
+    .inspect-target {
+      width: 78%; height: 44px;
+      border: 1px dashed var(--signal-lit);
+      background: var(--signal-wash);
+      border-radius: 3px;
+      display: grid; place-items: center;
+      color: var(--on-ink-mid);
+    }
+    .inspect-badge {
+      position: absolute;
+      left: 11%;
+      bottom: 8px;
+      background: var(--signal);
+      color: #fff;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 9.5px;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity var(--dur-base) var(--ease), transform var(--dur-base) var(--ease);
+    }
+    .basic:hover .inspect-badge { opacity: 1; transform: translateY(0); }
 
     /* ═══════════════════════════════════════
-       DIFFERENCE
+       DIFFERENCE  (the metaphor, made literal)
        ═══════════════════════════════════════ */
     .diff-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
-      gap: var(--s-4); margin-top: var(--s-12);
+      gap: var(--s-5);
+      margin-top: clamp(var(--s-10), 5vw, var(--s-12));
     }
-    .diff-col {
-      border: 1px solid var(--color-border);
+    .col {
       border-radius: var(--r-lg);
-      padding: var(--s-8) var(--s-8);
+      padding: var(--s-8);
+      overflow: hidden;
     }
-    .diff-col.them { background: var(--color-surface); opacity: 0.65; }
-    .diff-col.us   { background: var(--color-surface); box-shadow: var(--shadow-sm); }
-
-    .diff-col-label {
-      font-size: var(--t-xs);
-      font-weight: var(--w-semibold);
-      letter-spacing: 0.12em;
+    .col-label {
+      font-family: var(--font-mono);
+      font-size: var(--t-mono-sm);
+      font-weight: 500;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: var(--color-text-dim);
-      margin-bottom: var(--s-6);
+      padding-bottom: var(--s-4);
+      margin-bottom: var(--s-2);
+      border-bottom: 1px solid currentColor;
     }
-    .diff-col.us .diff-col-label { color: var(--color-accent-alt); }
+    .item {
+      display: flex;
+      align-items: baseline;
+      gap: var(--s-3);
+      padding: var(--s-4) 0;
+    }
+    .item + .item { border-top: 1px solid currentColor; }
+    .mark { flex-shrink: 0; font-size: 13px; }
 
-    .diff-item {
-      display: flex; align-items: flex-start; gap: var(--s-3);
-      padding: var(--s-3) 0;
-      border-bottom: 1px solid var(--color-border);
+    /* Left: paper. The old way, set in a serif, on rules. */
+    .col.old {
+      background: var(--paper-raise);
+      border: 1px solid var(--paper-line);
+      color: var(--on-paper-dim);
+      font-family: var(--font-old);
+      background-image: repeating-linear-gradient(
+        to bottom, transparent 0 31px, var(--rule) 31px 32px);
+    }
+    .col.old .col-label { color: var(--on-paper-dim); font-family: var(--font-mono); }
+    /* The notebook rule already separates these. Two dividers is one too many. */
+    .col.old .item + .item { border-top: none; }
+    .col.old .item { color: var(--on-paper-mid); font-size: 17px; line-height: 1.5; padding: 10px 0; }
+    .col.old .mark { color: var(--cardinal); font-family: var(--font-ui); }
+
+    /* Right: screen. The club's way, set in mono. */
+    .col.new {
+      background: var(--ink);
+      border: 1px solid var(--ink-line);
+      color: var(--ink-line);
+      box-shadow: 0 24px 60px rgba(16,21,43,0.18);
+    }
+    .col.new .col-label { color: var(--signal-lit); }
+    .col.new .item {
+      color: var(--on-ink);
+      font-family: var(--font-mono);
       font-size: var(--t-sm);
-      font-weight: var(--w-medium);
-      line-height: 1.5;
-      color: var(--color-text-mid);
+      line-height: 1.55;
     }
-    .diff-item:last-child { border-bottom: none; }
-    .diff-col.us .diff-item { color: var(--color-text); }
-
-    .diff-icon { flex-shrink: 0; font-size: 14px; line-height: 1.5; }
-    .diff-col.us .diff-icon { color: var(--color-accent-alt); }
+    .col.new .mark { color: var(--signal-lit); }
 
     /* ═══════════════════════════════════════
-       HOW IT WORKS
+       HOW IT WORKS  (a real sequence, so it counts)
        ═══════════════════════════════════════ */
-    #how {
-      background: var(--color-surface);
-      border-top: 1px solid var(--color-border);
-      border-bottom: 1px solid var(--color-border);
-    }
-    .steps { display: flex; flex-direction: column; gap: var(--s-3); margin-top: var(--s-12); }
+    .steps { display: flex; flex-direction: column; gap: var(--s-3); }
     .step {
       display: grid;
-      grid-template-columns: 56px 1fr auto;
+      grid-template-columns: 52px 1fr auto;
       align-items: center;
-      gap: var(--s-8);
-      padding: var(--s-6) var(--s-8);
-      background: var(--color-bg);
-      border: 1px solid var(--color-border);
+      gap: clamp(var(--s-4), 3vw, var(--s-8));
+      padding: var(--s-6);
+      background: var(--paper-raise);
+      border: 1px solid var(--paper-line);
       border-radius: var(--r-lg);
-      transition: box-shadow var(--dur-base) var(--ease-out),
-                  transform var(--dur-base) var(--ease-out);
+      transition: border-color var(--dur-base) var(--ease),
+                  transform var(--dur-base) var(--ease);
     }
-    .step:hover { box-shadow: var(--shadow-sm); transform: translateY(-2px); }
-
+    .step:hover { border-color: var(--signal); transform: translateX(4px); }
     .step-num {
-      font-family: 'Instrument Serif', serif;
-      font-size: 32px;
-      font-weight: var(--w-regular);
-      color: var(--color-accent);
-      opacity: 0.45;
+      font-family: var(--font-mono);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--signal);
+      opacity: 0.4;
       line-height: 1;
     }
-    .step-content h4 {
-      font-size: var(--t-base);
-      font-weight: var(--w-semibold);
-      margin-bottom: var(--s-1);
-    }
-    .step-content p {
-      font-size: var(--t-sm);
-      line-height: 1.6;
-      color: var(--color-text-mid);
-    }
-    .step-tag {
-      font-size: var(--t-2xs);
-      font-weight: var(--w-semibold);
-      letter-spacing: 0.1em;
+    .step h4 { font-size: 17px; letter-spacing: -0.02em; margin-bottom: var(--s-1); }
+    .step p { font-size: var(--t-sm); line-height: 1.65; color: var(--on-paper-mid); }
+    .step-when {
+      font-family: var(--font-mono);
+      font-size: var(--t-mono-sm);
+      font-weight: 500;
+      letter-spacing: 0.13em;
       text-transform: uppercase;
-      color: var(--color-accent-alt);
-      background: rgba(42,181,147,0.09);
-      border: 1px solid rgba(42,181,147,0.22);
-      padding: var(--s-1) var(--s-3);
-      border-radius: var(--r-sm);
+      color: var(--on-paper-dim);
       white-space: nowrap;
     }
 
     /* ═══════════════════════════════════════
-       APPLY CTA
+       CTA
        ═══════════════════════════════════════ */
-    #apply { padding: clamp(var(--s-12), 8vw, var(--s-24)) clamp(var(--s-4), 5vw, var(--s-16)); }
-    .apply-box {
-      max-width: 1060px; margin: 0 auto;
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-radius: var(--r-lg);
-      padding: clamp(var(--s-10), 6vw, var(--s-20)) clamp(var(--s-6), 5vw, var(--s-16));
+    #follow { position: relative; overflow: hidden; }
+    #follow::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(70% 130% at 50% 105%, rgba(46,125,240,0.24) 0%, transparent 62%);
+      pointer-events: none;
+    }
+    .follow-inner {
+      max-width: 700px;
+      margin: 0 auto;
       text-align: center;
-      box-shadow: var(--shadow-sm);
+      position: relative;
     }
-    .apply-box h2 { max-width: 520px; margin: 0 auto; }
-    .apply-body {
-      margin: var(--s-4) auto 0;
-      max-width: 400px;
-      font-size: var(--t-base);
+    .follow-inner h2 { max-width: 18ch; margin-inline: auto; }
+    .follow-body {
+      margin: var(--s-6) auto 0;
+      max-width: 44ch;
+      color: var(--on-ink-mid);
       line-height: 1.7;
-      color: var(--color-text-mid);
     }
-    .apply-actions { margin-top: var(--s-10); }
-    .apply-note {
-      margin-top: var(--s-4);
-      font-size: var(--t-xs);
-      font-weight: var(--w-medium);
-      letter-spacing: 0.06em;
-      color: var(--color-text-dim);
+    .follow-actions { margin-top: var(--s-10); }
+    .handle {
+      display: block;
+      margin-top: var(--s-6);
+      font-family: var(--font-mono);
+      font-size: var(--t-mono);
+      letter-spacing: 0.12em;
+      color: var(--on-ink-dim);
     }
 
     /* ═══════════════════════════════════════
        FOOTER
        ═══════════════════════════════════════ */
     footer {
-      border-top: 1px solid var(--color-border);
-      padding: var(--s-8) clamp(var(--s-4), 5vw, var(--s-16));
-      display: flex; justify-content: space-between; align-items: center;
+      border-top: 1px solid var(--ink-line);
+      padding: var(--s-8) var(--pad-x);
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--s-4);
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: var(--t-mono-sm);
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      color: var(--on-ink-dim);
     }
-    .footer-logo {
-      font-weight: var(--w-bold);
-      font-size: var(--t-base);
-      letter-spacing: -0.02em;
-    }
-    .footer-logo span { color: var(--color-accent); }
-    footer p {
-      font-size: var(--t-sm);
-      font-weight: var(--w-medium);
-      color: var(--color-text-dim);
-    }
+    footer a { color: var(--on-ink-mid); text-decoration: none; transition: color var(--dur-fast) var(--ease-io); }
+    footer a:hover { color: var(--signal-lit); }
 
     /* ═══════════════════════════════════════
-       ANIMATIONS
+       SCROLL REVEAL
        ═══════════════════════════════════════ */
-    @keyframes fadeUp {
-      to { opacity: 1; transform: translateY(0); }
-    }
-
     .reveal {
       opacity: 0;
-      transform: translateY(18px);
-      transition: opacity var(--dur-slow) var(--ease-out),
-                  transform var(--dur-slow) var(--ease-out);
+      transform: translateY(16px);
+      transition: opacity var(--dur-slow) var(--ease),
+                  transform var(--dur-slow) var(--ease);
     }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
     /* ═══════════════════════════════════════
        RESPONSIVE
        ═══════════════════════════════════════ */
-
-    /* Grids, padding, and spacing are fluid via clamp/auto-fill above.
-       Only override things that genuinely need a snap: nav links,
-       step tag overflow, footer stacking, apply box padding. */
+    @media (max-width: 860px) {
+      .nav-links li:not(.nav-follow-li) { display: none; }
+    }
 
     @media (max-width: 640px) {
-      .nav-links { display: none; }
+      :root { --t-body: 16px; }
       .hero-inner { grid-template-columns: 1fr; }
-      .hero-logo { display: none; }
-      .step { grid-template-columns: 48px 1fr; }
-      .step-tag { display: none; }
-      footer { flex-direction: column; gap: var(--s-3); text-align: center; }
-      .apply-box { padding: clamp(var(--s-8), 6vw, var(--s-20)) clamp(var(--s-4), 5vw, var(--s-16)); }
+      .hero-logo { width: 148px; order: -1; }
+      /* The slashes only read as separators on one line. */
+      .hero-meta .sep { display: none; }
+      .hero-meta { gap: var(--s-2) var(--s-4); }
+      .step { grid-template-columns: 40px 1fr; row-gap: var(--s-2); }
+      .step-when { grid-column: 2; }
+      .step:hover { transform: none; }
+      .col { padding: var(--s-6); }
+      footer { flex-direction: column; text-align: center; gap: var(--s-3); }
+    }
+
+    /* ═══════════════════════════════════════
+       REDUCED MOTION
+       ═══════════════════════════════════════ */
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      .rise { opacity: 1; transform: none; }
+      .reveal { opacity: 1; transform: none; }
+      .caret { opacity: 1; }
     }
   </style>
 </head>
@@ -634,274 +895,345 @@
 
   <!-- NAV -->
   <nav id="nav">
-    <a href="#" class="nav-logo">AI <span>Applied</span></a>
+    <a href="#hero" class="nav-mark"><span class="dot"></span>AI Applied</a>
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
-      <li><a href="#what">What We Do</a></li>
+      <li><a href="#what">What we do</a></li>
       <li><a href="#basics">Basics</a></li>
-      <li><a href="#how">How It Works</a></li>
-      <li><a href="#apply" class="nav-apply">Apply</a></li>
+      <li><a href="#how">How it works</a></li>
+      <li class="nav-follow-li"><a href="#follow" class="nav-follow">Follow</a></li>
     </ul>
   </nav>
 
   <!-- HERO -->
-  <section id="hero">
+  <section id="hero" class="screen">
     <div class="hero-inner">
       <div class="hero-copy">
-        <div class="hero-tag">Greenwich High School · Est. 2026</div>
-        <h1>AI is here.<br><em>Learn to live</em><br>with it.</h1>
-        <p class="hero-body">
-          AI is already part of your life. Most people just don't know how to use it well. We'll show you how.
+        <div class="hero-meta rise d1">
+          <span>Greenwich High School</span>
+          <span class="sep">/</span>
+          <span>Est. 2026</span>
+          <span class="sep">/</span>
+          <span class="status">Pending approval</span>
+        </div>
+        <h1 class="rise d2">
+          Everyone has AI.<br />
+          <span class="dim">Almost nobody</span><br />
+          <span class="lit">knows how<br />to use it.</span>
+        </h1>
+        <p class="hero-body rise d3">
+          AI Applied is a hands-on club at Greenwich High. Every session you build
+          something real and walk out with a skill you can use the next day.
         </p>
-        <div class="hero-actions">
-          <a href="#apply" class="btn btn-primary">Stay Updated</a>
-          <a href="#about" class="btn btn-secondary">Learn more</a>
+        <div class="hero-actions rise d4">
+          <a href="https://instagram.com/aiapplied_ghs" class="btn btn-primary" target="_blank" rel="noopener">Follow on Instagram</a>
+          <a href="#what" class="btn btn-ghost">See what we do</a>
         </div>
       </div>
-      <div class="hero-logo">
-        <img src="logo.jpeg" alt="AI Applied club logo" />
+      <div class="hero-logo rise d5">
+        <img src="logo.jpeg" alt="AI Applied club logo: a cardinal drawn from circuit-board traces" />
       </div>
     </div>
   </section>
 
-  <!-- TICKER -->
-  <div class="ticker-wrap">
-    <div class="ticker" aria-hidden="true">
-      <span class="ticker-item">Prompt Engineering</span>
-      <span class="ticker-item">Claude API</span>
-      <span class="ticker-item">AI Workflows</span>
-      <span class="ticker-item">Real-World Skills</span>
-      <span class="ticker-item">ChatGPT</span>
-      <span class="ticker-item">Build With AI</span>
-      <span class="ticker-item">Greenwich High School</span>
-      <span class="ticker-item">AI Applied</span>
-      <span class="ticker-item">Prompt Engineering</span>
-      <span class="ticker-item">Claude API</span>
-      <span class="ticker-item">AI Workflows</span>
-      <span class="ticker-item">Real-World Skills</span>
-      <span class="ticker-item">ChatGPT</span>
-      <span class="ticker-item">Build With AI</span>
-      <span class="ticker-item">Greenwich High School</span>
-      <span class="ticker-item">AI Applied</span>
-    </div>
-  </div>
-
   <!-- ABOUT -->
-  <section id="about">
+  <section id="about" class="paper ruled">
     <div class="container">
       <div class="about-grid">
         <div class="about-copy reveal">
-          <div class="section-label">About the Club</div>
-          <h2>Not your school's <em>average</em> AI club.</h2>
-          <p style="margin-top:var(--s-6)">
-            Most AI clubs teach you <strong>about</strong> AI. How it works, the ethics, the theory.
-            AI Applied is different. We teach you to <strong>actually use it</strong>.
+          <div class="eyebrow">About the club</div>
+          <h2>Not your school's <span class="lit">average</span> AI club.</h2>
+          <p>
+            Most AI clubs teach you <strong>about</strong> AI. How it works, the ethics,
+            the theory. AI Applied teaches you to <strong>actually use it</strong>.
           </p>
           <p>
-            Hands-on sessions every meeting. You leave with a real skill, a built tool, or
-            a workflow you can use tomorrow. No lectures. No slides full of definitions.
-            Just practical AI for real life.
+            Every meeting is hands-on. You leave with a real skill, a built tool, or a
+            workflow you can use tomorrow. No lectures. No slides full of definitions.
           </p>
           <p>
-            AI is not the future. It's now. And if you want to be successful,
-            you need to start learning it. We'll show you how.
+            AI is not the future, it's already here. If you want to keep up, you need to
+            start learning it now. We'll show you how.
           </p>
         </div>
-        <div class="stat-grid reveal">
-          <div class="stat-card">
-            <div class="stat-num">10-20</div>
-            <div class="stat-desc">sessions per year</div>
+
+        <aside class="spec reveal" aria-label="Club details">
+          <div class="spec-bar">
+            <i class="dot"></i><i class="dot"></i><i class="dot"></i>
+            <span class="label">club.spec</span>
           </div>
-          <div class="stat-card">
-            <div class="stat-num">100%</div>
-            <div class="stat-desc">hands-on learning</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-num">0</div>
-            <div class="stat-desc">boring theory lectures</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-num">∞</div>
-            <div class="stat-desc">skills you'll actually use</div>
-          </div>
-        </div>
+          <div class="spec-row"><span class="spec-key">Sessions / year</span><span class="spec-val">10 to 20</span></div>
+          <div class="spec-row"><span class="spec-key">Format</span><span class="spec-val">Hands-on, every time</span></div>
+          <div class="spec-row"><span class="spec-key">Prerequisites</span><span class="spec-val">None</span></div>
+          <div class="spec-row"><span class="spec-key">You leave with</span><span class="spec-val">Something you built</span></div>
+          <div class="spec-row"><span class="spec-key">Advisor</span><span class="spec-val">Mr. Angelo</span></div>
+          <div class="spec-row"><span class="spec-key">Status</span><span class="spec-val hot">Pending approval</span></div>
+        </aside>
       </div>
     </div>
   </section>
 
   <!-- WHAT WE DO -->
-  <section id="what">
+  <section id="what" class="paper">
     <div class="container">
-      <div class="pillars-header reveal">
-        <div class="section-label">What We Do</div>
-        <h2>Three things. <em>Done well.</em></h2>
-        <p class="section-body">Every session is built around one of three pillars. All of them practical, all of them useful.</p>
+      <div class="section-head centered reveal">
+        <div class="eyebrow centered">What we do</div>
+        <h2>Three things. <span class="lit">Done well.</span></h2>
+        <p class="lede">Every session is built around one of these. All practical, all useful outside the room.</p>
       </div>
-      <div class="pillars-grid">
+      <div class="pillars">
         <div class="pillar reveal">
-          <div class="pillar-num">01 / 03</div>
-          <h3>Master the Tools</h3>
-          <p>Claude, ChatGPT, Gemini, Perplexity, NotebookLM. You'll know what each one is actually good at and how to get the most out of them for school, projects, and beyond.</p>
+          <div class="pillar-tag">Tools</div>
+          <h3>Master the tools</h3>
+          <p>Claude, ChatGPT, Gemini, Perplexity, NotebookLM. You'll know what each one is genuinely good at and how to get real work out of it.</p>
         </div>
         <div class="pillar reveal">
-          <div class="pillar-num">02 / 03</div>
+          <div class="pillar-tag">Build</div>
           <h3>Build with AI</h3>
-          <p>Prompt engineering, API basics, building real tools. You'll leave having made something: a workflow, an app, a system. Not just having heard about it.</p>
+          <p>Prompt engineering, API basics, building real tools. You'll leave having made something: a workflow, an app, a system.</p>
         </div>
         <div class="pillar reveal">
-          <div class="pillar-num">03 / 03</div>
-          <h3>Integrate It</h3>
-          <p>The goal isn't to be impressed by AI. It's to make it a natural part of how you work, study, create, and solve problems every single day.</p>
+          <div class="pillar-tag">Integrate</div>
+          <h3>Make it a habit</h3>
+          <p>The goal isn't to be impressed by AI. It's to make it a normal part of how you study, create, and solve problems.</p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- BASICS -->
-  <section id="basics">
+  <section id="basics" class="screen">
     <div class="container">
-      <div class="basics-header reveal">
-        <div class="section-label">Computer Basics</div>
-        <h2>Don't know much about computers? <em>Don't worry.</em></h2>
-        <p class="section-body">You don't need any experience to join. Before we get into AI, we make sure everyone is comfortable with the tools. We start from zero, no judgment.</p>
+      <div class="section-head centered reveal">
+        <div class="eyebrow centered">Computer basics</div>
+        <h2>New to this? <span class="lit">Start here.</span></h2>
+        <p class="lede">No experience needed. Before we touch AI, we make sure everyone is comfortable with the machine. We start from zero, no judgment.</p>
       </div>
+
       <div class="basics-grid">
-        <div class="basics-card reveal">
-          <span class="basics-icon">&gt;_</span>
-          <h3>Terminal</h3>
-          <p>A text window that controls your whole computer. Sounds intimidating. It's not. You'll be running commands confidently within the first session.</p>
-        </div>
-        <div class="basics-card reveal">
-          <span class="basics-icon">⌂ Files</span>
-          <h3>Finder &amp; File Explorer</h3>
-          <p>Where your files actually live. We'll teach you how to organize your projects, stop losing things in Downloads, and navigate your computer like you own it.</p>
-        </div>
-        <div class="basics-card reveal">
-          <span class="basics-icon">/ Paths</span>
-          <h3>File Paths</h3>
-          <p>What does /Users/you/Documents actually mean? Once it clicks, you'll wonder how you ever got by without understanding it. Takes about five minutes.</p>
-        </div>
-        <div class="basics-card reveal">
-          <span class="basics-icon">⌘ Keys</span>
-          <h3>Keyboard Shortcuts</h3>
-          <p>The ones everyone knows, plus the ones that actually save time. Copy, paste, undo, switch apps, take screenshots. Small habits, big difference.</p>
-        </div>
-        <div class="basics-card reveal">
-          <span class="basics-icon">{ } Code</span>
-          <h3>Text Editors</h3>
-          <p>VS Code is where you write code. We'll get you set up, walk you through the layout, and make sure nothing about it feels foreign before we start building.</p>
-        </div>
-        <div class="basics-card reveal">
-          <span class="basics-icon">&lt;/&gt; Dev</span>
-          <h3>Browser DevTools</h3>
-          <p>Right-click any website and inspect it. You can see exactly how it's built. It's one of the most useful things you can learn, and most people have no idea it exists.</p>
-        </div>
+
+        <!-- Terminal -->
+        <article class="basic reveal">
+          <div class="art" aria-hidden="true">
+            <div class="art-bar"><i></i><i></i><i></i><span>terminal</span></div>
+            <div class="art-body">
+              <div class="line"><span class="prompt">~ %</span> <span class="cmd">cd projects</span></div>
+              <div class="line"><span class="prompt">~ %</span> <span class="cmd">ls</span></div>
+              <div class="line out">site  notes  first-app</div>
+              <div class="line"><span class="prompt">~ %</span><span class="caret"></span></div>
+            </div>
+          </div>
+          <div>
+            <h3>Terminal</h3>
+            <p>A text window that controls your whole computer. It looks intimidating. It isn't. You'll be running commands in the first session.</p>
+          </div>
+        </article>
+
+        <!-- Finder -->
+        <article class="basic reveal">
+          <div class="art" aria-hidden="true">
+            <div class="art-bar"><i></i><i></i><i></i><span>documents</span></div>
+            <div class="art-body">
+              <div class="row"><span class="ic">▸</span> school</div>
+              <div class="row sel"><span class="ic">▾</span> projects</div>
+              <div class="row" style="padding-left:18px"><span class="ic">·</span> index.html</div>
+              <div class="row" style="padding-left:18px"><span class="ic">·</span> notes.md</div>
+            </div>
+          </div>
+          <div>
+            <h3>Finder and File Explorer</h3>
+            <p>Where your files actually live. Organize your projects, stop losing things in Downloads, and navigate your computer like you own it.</p>
+          </div>
+        </article>
+
+        <!-- File paths -->
+        <article class="basic reveal">
+          <div class="art" aria-hidden="true">
+            <div class="art-bar"><i></i><i></i><i></i><span>path</span></div>
+            <div class="art-body">
+              <div class="crumbs">
+                <span class="crumb">Users</span><span class="slash">/</span>
+                <span class="crumb">you</span><span class="slash">/</span>
+                <span class="crumb">Documents</span><span class="slash">/</span>
+                <span class="crumb">site</span>
+              </div>
+            </div>
+          </div>
+          <div>
+            <h3>File paths</h3>
+            <p>What does /Users/you/Documents actually mean? Once it clicks you'll wonder how you got by without it. Takes about five minutes.</p>
+          </div>
+        </article>
+
+        <!-- Shortcuts -->
+        <article class="basic reveal">
+          <div class="art" aria-hidden="true">
+            <div class="art-bar"><i></i><i></i><i></i><span>shortcut</span></div>
+            <div class="art-body">
+              <div class="keys">
+                <span class="cap">⌘</span><span class="plus">+</span>
+                <span class="cap">⇧</span><span class="plus">+</span>
+                <span class="cap">4</span>
+              </div>
+            </div>
+          </div>
+          <div>
+            <h3>Keyboard shortcuts</h3>
+            <p>The ones everyone knows, plus the ones that actually save time. Copy, undo, switch apps, screenshot. Small habits, big difference.</p>
+          </div>
+        </article>
+
+        <!-- Editor -->
+        <article class="basic reveal">
+          <div class="art" aria-hidden="true">
+            <div class="art-bar"><i></i><i></i><i></i><span>index.html</span></div>
+            <div class="art-body">
+              <div class="code">
+                <span class="ln">1</span><span class="tk-com">&lt;!-- your first page --&gt;</span>
+                <span class="ln">2</span><span class="tk-key">&lt;h1&gt;</span><span class="tk-fn">Hello</span><span class="tk-key">&lt;/h1&gt;</span>
+                <span class="ln">3</span><span class="tk-key">&lt;p&gt;</span><span class="tk-str">It works.</span><span class="tk-key">&lt;/p&gt;</span>
+              </div>
+            </div>
+          </div>
+          <div>
+            <h3>Text editors</h3>
+            <p>VS Code is where you write code. We'll get you set up and walk through the layout so nothing about it feels foreign before we build.</p>
+          </div>
+        </article>
+
+        <!-- DevTools -->
+        <article class="basic reveal">
+          <div class="art" aria-hidden="true">
+            <div class="art-bar"><i></i><i></i><i></i><span>inspect</span></div>
+            <div class="art-body">
+              <div class="inspect">
+                <div class="inspect-target">any website</div>
+                <div class="inspect-badge">section.hero &nbsp;1060 × 84</div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <h3>Browser DevTools</h3>
+            <p>Right-click any website and look inside it. You can see exactly how it was built. Most people have no idea this exists.</p>
+          </div>
+        </article>
+
       </div>
     </div>
   </section>
 
   <!-- DIFFERENCE -->
-  <section id="difference">
+  <section id="difference" class="paper">
     <div class="container">
-      <div class="reveal">
-        <div class="section-label">The Difference</div>
-        <h2>Other clubs vs. <em>AI Applied.</em></h2>
+      <div class="section-head reveal" style="margin-bottom:0">
+        <div class="eyebrow">The difference</div>
+        <h2>Other clubs vs. <span class="lit">AI Applied.</span></h2>
       </div>
       <div class="diff-grid reveal">
-        <div class="diff-col them">
-          <div class="diff-col-label">Other AI clubs</div>
-          <div class="diff-item"><span class="diff-icon">✗</span> Theory-heavy lectures</div>
-          <div class="diff-item"><span class="diff-icon">✗</span> Focus on how AI works</div>
-          <div class="diff-item"><span class="diff-icon">✗</span> Ethics debates</div>
-          <div class="diff-item"><span class="diff-icon">✗</span> Leave with notes</div>
-          <div class="diff-item"><span class="diff-icon">✗</span> Interesting but not useful</div>
+        <div class="col old">
+          <div class="col-label">Other AI clubs</div>
+          <div class="item"><span class="mark">✗</span> Theory-heavy lectures</div>
+          <div class="item"><span class="mark">✗</span> Focus on how AI works</div>
+          <div class="item"><span class="mark">✗</span> Ethics debates</div>
+          <div class="item"><span class="mark">✗</span> You leave with notes</div>
+          <div class="item"><span class="mark">✗</span> Interesting, not useful</div>
         </div>
-        <div class="diff-col us">
-          <div class="diff-col-label">AI Applied</div>
-          <div class="diff-item"><span class="diff-icon">✓</span> Hands-on every session</div>
-          <div class="diff-item"><span class="diff-icon">✓</span> Focus on how to use AI</div>
-          <div class="diff-item"><span class="diff-icon">✓</span> Real skills, real tools</div>
-          <div class="diff-item"><span class="diff-icon">✓</span> Leave with something built</div>
-          <div class="diff-item"><span class="diff-icon">✓</span> Immediately applicable</div>
+        <div class="col new">
+          <div class="col-label">AI Applied</div>
+          <div class="item"><span class="mark">✓</span> Hands-on every session</div>
+          <div class="item"><span class="mark">✓</span> Focus on how to use AI</div>
+          <div class="item"><span class="mark">✓</span> Real skills, real tools</div>
+          <div class="item"><span class="mark">✓</span> You leave with something built</div>
+          <div class="item"><span class="mark">✓</span> Useful the same day</div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- HOW IT WORKS -->
-  <section id="how">
+  <section id="how" class="paper ruled">
     <div class="container">
-      <div class="reveal">
-        <div class="section-label">How It Works</div>
-        <h2>Simple as <em>that.</em></h2>
+      <div class="section-head reveal">
+        <div class="eyebrow">How it works</div>
+        <h2>Simple as <span class="lit">that.</span></h2>
       </div>
       <div class="steps">
         <div class="step reveal">
           <div class="step-num">01</div>
-          <div class="step-content">
-            <h4>Apply When We Launch</h4>
-            <p>Applications will open once the club is approved. Fill out a short form. No experience required, just curiosity.</p>
+          <div>
+            <h4>Join when we launch</h4>
+            <p>The club is waiting on school approval. Follow the Instagram and you'll know the moment sign-ups open.</p>
           </div>
-          <div class="step-tag">Coming Soon</div>
+          <div class="step-when">Coming soon</div>
         </div>
         <div class="step reveal">
           <div class="step-num">02</div>
-          <div class="step-content">
-            <h4>Show Up and Build</h4>
-            <p>Weekly sessions at Greenwich High. Every meeting has a goal. You leave having done something, not just heard something.</p>
+          <div>
+            <h4>Show up and build</h4>
+            <p>Sessions at Greenwich High. Every meeting has one goal and one thing you make. You leave having done something, not just heard something.</p>
           </div>
-          <div class="step-tag">Weekly</div>
+          <div class="step-when">Every session</div>
         </div>
         <div class="step reveal">
           <div class="step-num">03</div>
-          <div class="step-content">
-            <h4>Actually Use It</h4>
-            <p>The skills you pick up aren't just club skills. They're life skills. Use them in every class, every project, every job.</p>
+          <div>
+            <h4>Actually use it</h4>
+            <p>These aren't club skills, they're life skills. Use them in every class, every project, and every job after.</p>
           </div>
-          <div class="step-tag">Always</div>
+          <div class="step-when">From then on</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- APPLY -->
-  <section id="apply">
-    <div class="apply-box reveal">
-      <div class="section-label">Ready?</div>
-      <h2>AI is here.<br>It's not slowing down.<br><em>Start now.</em></h2>
-      <p class="apply-body">Follow our Instagram for updates on when applications open and to see what we're building.</p>
-      <div class="apply-actions">
-        <a href="https://instagram.com/aiapplied_ghs" class="btn btn-primary" target="_blank" rel="noopener">Follow on Instagram</a>
+  <!-- FOLLOW -->
+  <section id="follow" class="screen">
+    <div class="container">
+      <div class="follow-inner reveal">
+        <div class="eyebrow centered">Get in early</div>
+        <h2>AI isn't slowing down. <span class="lit">Neither are we.</span></h2>
+        <p class="follow-body">
+          We post what we're building and we'll announce the moment sign-ups open.
+          Following is the only thing to do right now.
+        </p>
+        <div class="follow-actions">
+          <a href="https://instagram.com/aiapplied_ghs" class="btn btn-primary" target="_blank" rel="noopener">Follow on Instagram</a>
+        </div>
+        <span class="handle">@aiapplied_ghs</span>
       </div>
-      <p class="apply-note">Coming soon · Greenwich High School</p>
     </div>
   </section>
 
   <!-- FOOTER -->
   <footer>
-    <div class="footer-logo">AI <span>Applied</span></div>
-    <p>Greenwich High School · Est. 2026</p>
-    <p>© 2026 AI Applied</p>
+    <span>AI Applied</span>
+    <span>Greenwich High School / Est. 2026</span>
+    <a href="https://instagram.com/aiapplied_ghs" target="_blank" rel="noopener">@aiapplied_ghs</a>
   </footer>
 
   <script>
-    // Nav elevation on scroll
-    const nav = document.getElementById('nav');
-    window.addEventListener('scroll', () => {
+    // Nav gains a hairline once you leave the top of the page.
+    var nav = document.getElementById('nav');
+    window.addEventListener('scroll', function () {
       nav.classList.toggle('elevated', window.scrollY > 8);
     }, { passive: true });
 
-    // Scroll reveal with intentional stagger
-    const reveals = document.querySelectorAll('.reveal');
-    const obs = new IntersectionObserver(entries => {
-      entries.forEach((entry, i) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => entry.target.classList.add('visible'), i * 70);
-          obs.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-    reveals.forEach(r => obs.observe(r));
+    // Scroll reveal, staggered within each viewport batch.
+    var reveals = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry, i) {
+          if (entry.isIntersecting) {
+            var el = entry.target;
+            setTimeout(function () { el.classList.add('visible'); }, i * 70);
+            obs.unobserve(el);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+      reveals.forEach(function (r) { obs.observe(r); });
+    } else {
+      reveals.forEach(function (r) { r.classList.add('visible'); });
+    }
   </script>
 </body>
 </html>
