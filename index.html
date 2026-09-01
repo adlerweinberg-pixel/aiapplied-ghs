@@ -225,12 +225,10 @@
     .btn-primary {
       background: var(--signal);
       color: #fff;
-      box-shadow: 0 0 0 1px rgba(90,174,255,0.35), 0 6px 20px rgba(46,125,240,0.30);
     }
     .btn-primary:hover {
       background: var(--signal-lit);
       color: var(--ink);
-      box-shadow: 0 0 0 1px rgba(90,174,255,0.55), 0 10px 28px rgba(46,125,240,0.42);
     }
 
     .btn-ghost {
@@ -283,7 +281,6 @@
       width: 7px; height: 7px;
       border-radius: 50%;
       background: var(--signal-lit);
-      box-shadow: 0 0 0 3px rgba(90,174,255,0.16);
       flex-shrink: 0;
     }
 
@@ -374,7 +371,6 @@
       width: 6px; height: 6px;
       border-radius: 50%;
       background: var(--signal-lit);
-      animation: pulse 2.6s var(--ease-io) infinite;
     }
 
     h1 {
@@ -409,9 +405,6 @@
       overflow: hidden;
       flex-shrink: 0;
       border: 1px solid var(--ink-line);
-      box-shadow: 0 0 0 1px rgba(90,174,255,0.10),
-                  0 30px 70px rgba(0,0,0,0.55),
-                  0 0 90px rgba(46,125,240,0.18);
     }
     .hero-logo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
@@ -424,10 +417,6 @@
     .d5 { animation-delay: 200ms; }
 
     @keyframes rise { to { opacity: 1; transform: translateY(0); } }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50%      { opacity: 0.35; transform: scale(0.82); }
-    }
 
     /* ═══════════════════════════════════════
        ABOUT  (paper prose beside a screen spec)
@@ -793,13 +782,7 @@
     /* ═══════════════════════════════════════
        CTA
        ═══════════════════════════════════════ */
-    #follow { position: relative; overflow: hidden; }
-    #follow::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: radial-gradient(70% 130% at 50% 105%, rgba(46,125,240,0.24) 0%, transparent 62%);
-      pointer-events: none;
-    }
+    #follow { position: relative; }
     .follow-inner {
       max-width: 700px;
       margin: 0 auto;
