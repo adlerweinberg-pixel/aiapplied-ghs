@@ -685,6 +685,47 @@
     .basic:hover .inspect-badge { opacity: 1; transform: translateY(0); }
 
     /* ═══════════════════════════════════════
+       THE YEAR  (a real sequence, so it counts)
+       ═══════════════════════════════════════ */
+    .phases {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+      gap: var(--s-4);
+    }
+    .phase {
+      background: var(--paper-raise);
+      border: 1px solid var(--paper-line);
+      border-radius: var(--r-lg);
+      padding: var(--s-6);
+      transition: border-color var(--dur-base) var(--ease),
+                  transform var(--dur-base) var(--ease),
+                  box-shadow var(--dur-base) var(--ease);
+    }
+    .phase:hover {
+      border-color: var(--signal);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+    /* The project arc closes the year, so it gets the full row. */
+    .phase:last-child { grid-column: 1 / -1; }
+    .phase .step-num { margin-bottom: var(--s-4); }
+    .phase h3 { font-size: var(--t-h3); letter-spacing: -0.02em; margin-bottom: var(--s-2); }
+    .phase p { font-size: var(--t-sm); line-height: 1.65; color: var(--on-paper-mid); max-width: 60ch; }
+    .year-close {
+      margin-top: clamp(var(--s-8), 4vw, var(--s-12));
+      padding-top: var(--s-6);
+      border-top: 2px solid var(--signal);
+      max-width: 60ch;
+      font-family: var(--font-display);
+      font-size: clamp(18px, 2vw, 21px);
+      font-weight: 600;
+      line-height: 1.5;
+      letter-spacing: -0.01em;
+      color: var(--on-paper);
+    }
+
+    /* ═══════════════════════════════════════
        HOW IT WORKS  (a real sequence, so it counts)
        ═══════════════════════════════════════ */
     .steps { display: flex; flex-direction: column; gap: var(--s-3); list-style: none; }
@@ -1058,6 +1099,55 @@
         </article>
 
       </div>
+    </div>
+  </section>
+
+  <!-- THE YEAR -->
+  <section id="year" class="paper">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="eyebrow">The plan, year one</div>
+        <h2>A year of getting <span class="lit">good at it.</span></h2>
+        <p class="lede">Most meetings stand alone, so you can jump in anywhere and still leave with something. This plan is pending school approval and may change.</p>
+      </div>
+      <ol class="phases" role="list">
+        <li class="phase reveal">
+          <div class="step-num" aria-hidden="true">01</div>
+          <h3>Get set up</h3>
+          <p>Accounts, prompts that work, and picking the right tool for the job.</p>
+        </li>
+        <li class="phase reveal">
+          <div class="step-num" aria-hidden="true">02</div>
+          <h3>School</h3>
+          <p>Study kits, an AI tutor for your hardest class, and research with real sources. Study, not answers: AI as tutor and quizzer, never doing graded work.</p>
+        </li>
+        <li class="phase reveal">
+          <div class="step-num" aria-hidden="true">03</div>
+          <h3>Make it yours</h3>
+          <p>An assistant tuned to your life, and one chore automated.</p>
+        </li>
+        <li class="phase reveal">
+          <div class="step-num" aria-hidden="true">04</div>
+          <h3>Create</h3>
+          <p>Images, design, video, audio, and writing.</p>
+        </li>
+        <li class="phase reveal">
+          <div class="step-num" aria-hidden="true">05</div>
+          <h3>Work and careers</h3>
+          <p>Docs, Sheets, and Slides, resumes, interview practice, and how AI shows up in real jobs.</p>
+        </li>
+        <li class="phase reveal">
+          <div class="step-num" aria-hidden="true">06</div>
+          <h3>Build</h3>
+          <p>A web page AI helps you write, live on the internet.</p>
+        </li>
+        <li class="phase reveal">
+          <div class="step-num" aria-hidden="true">07</div>
+          <h3>Project arc</h3>
+          <p>Pick one piece, push it further, and show your portfolio.</p>
+        </li>
+      </ol>
+      <p class="year-close reveal">Everything you make goes in your portfolio. By the end of the year it holds a personal assistant, a study system, a creative piece, and a live web tool.</p>
     </div>
   </section>
 
