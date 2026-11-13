@@ -319,13 +319,14 @@
       font-weight: 500;
       color: var(--on-ink-mid);
       display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: var(--s-2) var(--s-6);
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--s-2);
       margin-bottom: var(--s-8);
     }
     .hero-meta .status {
       color: var(--signal-lit);
+      text-decoration: none;
       display: inline-flex;
       align-items: center;
       gap: var(--s-2);
@@ -773,8 +774,8 @@
     <div class="hero-inner">
       <div class="hero-copy">
         <div class="hero-meta rise d1">
-          <span>Greenwich High School, est. 2026</span>
-          <span class="status">Pending school approval</span>
+          <span>Greenwich High School, est. 2026, pending school approval</span>
+          <a href="#team" class="status">Leadership applications are open</a>
         </div>
         <h1 class="rise d2">
           Everyone has AI.<br />
@@ -786,8 +787,8 @@
           something real and walk out with a skill you can use the next day.
         </p>
         <div class="hero-actions rise d4">
-          <a href="https://instagram.com/aiapplied_ghs" class="btn btn-primary" target="_blank" rel="noopener">Follow on Instagram</a>
-          <a href="#team" class="btn btn-ghost">Apply for a leadership position</a>
+          <a href="#team" class="btn btn-primary">Apply for a leadership position</a>
+          <a href="https://instagram.com/aiapplied_ghs" class="btn btn-ghost" target="_blank" rel="noopener">Follow on Instagram</a>
         </div>
       </div>
       <div class="hero-logo rise d5">
@@ -1044,8 +1045,8 @@
     <div class="container">
       <div class="team-inner reveal">
         <div>
-          <h2>Help run the club.</h2>
-          <p class="lede">We're picking a small leadership team to plan meetings, teach, and run the club's Instagram. Apply through a short Google Form.</p>
+          <h2>Leadership applications are open.</h2>
+          <p class="lede">We're picking a small team to help plan meetings, teach, and run the club's Instagram. Apply now through a short Google Form.</p>
         </div>
         <a href="https://docs.google.com/forms/d/e/1FAIpQLSfxLlHZq_fVf6PpITuWfpw6X4vjnwfe4ZvbgnAKYLqPpkowcQ/viewform" class="btn btn-primary" target="_blank" rel="noopener">Apply for a position</a>
       </div>
@@ -1056,7 +1057,7 @@
   <section id="follow" class="screen">
     <div class="container">
       <div class="follow-inner reveal">
-        <h2>Sign-ups open when the school approves us.</h2>
+        <h2>Membership opens when the school approves us.</h2>
         <p class="follow-body">
           We'll announce it on Instagram first. Until then, follow along to see what we're building.
         </p>
