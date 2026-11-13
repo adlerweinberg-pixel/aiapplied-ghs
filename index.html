@@ -142,12 +142,6 @@
       position: relative;
     }
 
-    /* Notebook rule. Reserved for the sections that
-       explain, not used as general wallpaper. */
-    .paper.ruled {
-      background-image: repeating-linear-gradient(
-        to bottom, transparent 0 31px, var(--rule) 31px 32px);
-    }
     /* The red margin line real school paper has. */
     .paper.ruled::before {
       content: '';
@@ -169,33 +163,6 @@
     /* ═══════════════════════════════════════
        SHARED TYPE
        ═══════════════════════════════════════ */
-    .eyebrow {
-      font-family: var(--font-display);
-      font-size: var(--t-label);
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--on-paper-mid);
-      display: flex;
-      align-items: center;
-      gap: var(--s-3);
-      margin-bottom: var(--s-5);
-    }
-    .screen .eyebrow { color: var(--on-ink-mid); }
-    .eyebrow::after {
-      content: '';
-      height: 1px;
-      flex: 1;
-      max-width: 64px;
-      background: var(--signal);
-    }
-    .eyebrow.centered { justify-content: center; }
-    .eyebrow.centered::before {
-      content: '';
-      height: 1px; flex: 1; max-width: 64px;
-      background: var(--signal);
-    }
-
     h1, h2, h3, h4 {
       font-family: var(--font-display);
       font-weight: 700;
@@ -208,9 +175,6 @@
       max-width: 19ch;
       text-wrap: balance;
     }
-    /* Red text only at heading size. */
-    h2 .lit { color: var(--signal); }
-    .screen h2 .lit { color: var(--signal-lit); }
 
     .lede {
       margin-top: var(--s-5);
@@ -242,13 +206,7 @@
       border-radius: var(--r-md);
       border: 1px solid transparent;
       cursor: pointer;
-      transition: background var(--dur-fast) var(--ease-io),
-                  border-color var(--dur-fast) var(--ease-io),
-                  color var(--dur-fast) var(--ease-io),
-                  transform var(--dur-fast) var(--ease-io);
     }
-    .btn:hover { transform: translateY(-2px); }
-    .btn:active { transform: translateY(0); transition-duration: 60ms; }
 
     /* On screen: red fill, off-white on hover. */
     .btn-primary {
@@ -290,8 +248,6 @@
       -webkit-backdrop-filter: blur(14px);
       border-bottom: 1px solid transparent;
       z-index: 100;
-      transition: border-color var(--dur-base) var(--ease-io),
-                  background var(--dur-base) var(--ease-io);
     }
     nav.elevated {
       border-bottom-color: var(--ink-line);
@@ -327,7 +283,6 @@
       padding: var(--s-2) var(--s-3);
       border-radius: var(--r-sm);
       white-space: nowrap;
-      transition: color var(--dur-fast) var(--ease-io);
     }
     .nav-links a:hover { color: var(--on-ink); }
 
@@ -336,8 +291,6 @@
       padding: 8px var(--s-4) !important;
       color: var(--on-ink) !important;
       border: 1px solid var(--ink-line);
-      transition: border-color var(--dur-fast) var(--ease-io),
-                  background var(--dur-fast) var(--ease-io) !important;
     }
     .nav-follow:hover { border-color: var(--signal); background: var(--signal); }
 
@@ -362,18 +315,15 @@
 
     .hero-meta {
       font-family: var(--font-display);
-      font-size: var(--t-label);
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
+      font-size: 14px;
+      font-weight: 500;
       color: var(--on-ink-mid);
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: var(--s-3);
+      gap: var(--s-2) var(--s-6);
       margin-bottom: var(--s-8);
     }
-    .hero-meta .sep { color: var(--on-ink-dim); }
     .hero-meta .status {
       color: var(--signal-lit);
       display: inline-flex;
@@ -438,14 +388,17 @@
       gap: clamp(var(--s-10), 6vw, var(--s-16));
       align-items: start;
     }
+    /* Notebook rule: one line under each line of text, like writing on lined paper. */
     .about-copy p {
       color: var(--on-paper-mid);
-      line-height: 1.8;
+      line-height: 32px;
       max-width: 48ch;
+      background-image: linear-gradient(to bottom, transparent 31px, var(--rule) 31px);
+      background-size: 100% 32px;
     }
     .about-copy p + p { margin-top: var(--s-5); }
     .about-copy strong { color: var(--on-paper); font-weight: 600; }
-    .about-copy > p:first-of-type { margin-top: var(--s-6); }
+    .about-copy > p:first-of-type { margin-top: var(--s-8); }
 
     /* The spec sheet replaces stat cards: more facts, less decoration. */
     .spec {
@@ -462,10 +415,8 @@
       padding: var(--s-3) var(--s-5);
       border-bottom: 1px solid var(--ink-line);
       font-family: var(--font-display);
-      font-size: var(--t-label);
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
+      font-size: 13px;
+      font-weight: 500;
       color: var(--on-ink-dim);
     }
     .spec-bar .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ink-line); }
@@ -482,11 +433,9 @@
     .spec-row:last-child { border-bottom: none; }
     .spec-key {
       font-family: var(--font-display);
-      font-size: var(--t-label);
-      font-weight: 600;
+      font-size: 14px;
+      font-weight: 500;
       color: var(--on-ink-dim);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
       white-space: nowrap;
     }
     .spec-val { color: var(--on-ink); text-align: right; font-size: 15px; font-weight: 500; line-height: 1.45; }
@@ -498,34 +447,11 @@
     .pillars {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
-      gap: var(--s-5);
+      gap: var(--s-10) clamp(var(--s-8), 4vw, var(--s-12));
     }
     .pillar {
-      background: var(--paper-raise);
-      border: 1px solid var(--paper-line);
-      border-radius: var(--r-lg);
-      padding: var(--s-8);
-      position: relative;
-      transition: border-color var(--dur-base) var(--ease),
-                  transform var(--dur-base) var(--ease),
-                  box-shadow var(--dur-base) var(--ease);
-    }
-    .pillar:hover {
-      border-color: var(--signal);
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-md);
-    }
-    .pillar-tag {
-      display: inline-block;
-      font-family: var(--font-display);
-      font-size: var(--t-label);
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--on-paper-mid);
-      padding-bottom: var(--s-2);
-      border-bottom: 2px solid var(--signal);
-      margin-bottom: var(--s-6);
+      border-top: 1px solid var(--on-paper);
+      padding-top: var(--s-6);
     }
     .pillar h3 {
       font-size: var(--t-h3);
@@ -551,10 +477,7 @@
       display: flex;
       flex-direction: column;
       gap: var(--s-5);
-      transition: border-color var(--dur-base) var(--ease),
-                  transform var(--dur-base) var(--ease);
     }
-    .basic:hover { border-color: var(--signal); transform: translateY(-3px); }
     .basic h3 { font-size: 18px; letter-spacing: -0.02em; margin-bottom: var(--s-2); }
     .basic p { font-size: var(--t-sm); line-height: 1.65; color: var(--on-ink-mid); }
 
@@ -614,10 +537,8 @@
       padding: 1px var(--s-1);
       border-radius: 3px;
       color: var(--on-ink-mid);
-      transition: background var(--dur-fast) var(--ease-io), color var(--dur-fast) var(--ease-io);
     }
     .row.sub { padding-left: 18px; }
-    .basic:hover .row.sel { background: var(--signal-wash); color: var(--on-ink); }
     .row .ic { color: var(--signal-lit); flex-shrink: 0; }
 
     /* 3. File paths */
@@ -627,12 +548,7 @@
       border-radius: 3px;
       background: var(--ink-tint);
       color: var(--on-ink-mid);
-      transition: background var(--dur-base) var(--ease-io),
-                  color var(--dur-base) var(--ease-io);
     }
-    .basic:hover .crumb { background: var(--signal-wash); color: var(--signal-lit); }
-    .basic:hover .crumb:nth-child(4) { transition-delay: 60ms; }
-    .basic:hover .crumb:nth-child(6) { transition-delay: 120ms; }
     .slash { color: var(--on-ink-dim); }
 
     /* 4. Keycaps */
@@ -649,18 +565,8 @@
       font-size: var(--t-mono);
       font-weight: 500;
       white-space: nowrap;
-      transition: transform var(--dur-fast) var(--ease-io),
-                  box-shadow var(--dur-fast) var(--ease-io),
-                  color var(--dur-fast) var(--ease-io);
     }
     .cap .glyph { font-family: var(--font-body); font-size: 14px; line-height: 1; }
-    .basic:hover .cap {
-      transform: translateY(2px);
-      box-shadow: 0 0 0 var(--ink-line);
-      color: var(--signal-lit);
-    }
-    .basic:hover .cap:nth-child(3) { transition-delay: 50ms; }
-    .basic:hover .cap:nth-child(5) { transition-delay: 100ms; }
     .plus { color: var(--on-ink-dim); }
 
     /* 5. Editor */
@@ -692,44 +598,46 @@
       font-size: 9.5px;
       letter-spacing: 0.04em;
       white-space: nowrap;
-      opacity: 0;
-      transform: translateY(4px);
-      transition: opacity var(--dur-base) var(--ease), transform var(--dur-base) var(--ease);
     }
-    .basic:hover .inspect-badge { opacity: 1; transform: translateY(0); }
 
     /* ═══════════════════════════════════════
-       THE YEAR  (a real sequence, so it counts)
+       THE YEAR  (rows against a 20-meeting track)
        ═══════════════════════════════════════ */
-    .phases {
-      list-style: none;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
-      gap: var(--s-4);
-    }
+    .plan { list-style: none; border-bottom: 1px solid var(--paper-line); }
+    .plan-axis,
     .phase {
-      background: var(--paper-raise);
-      border: 1px solid var(--paper-line);
-      border-radius: var(--r-lg);
-      padding: var(--s-6);
-      transition: border-color var(--dur-base) var(--ease),
-                  transform var(--dur-base) var(--ease),
-                  box-shadow var(--dur-base) var(--ease);
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+      gap: var(--s-8);
+      align-items: center;
     }
-    .phase:hover {
-      border-color: var(--signal);
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-md);
+    .plan-axis {
+      padding-bottom: var(--s-3);
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--on-paper-dim);
     }
-    /* The project arc closes the year, so it gets the full row. */
-    .phase:last-child { grid-column: 1 / -1; }
-    .phase .step-num { margin-bottom: var(--s-4); }
-    .phase h3 { font-size: var(--t-h3); letter-spacing: -0.02em; margin-bottom: var(--s-2); }
-    .phase p { font-size: var(--t-sm); line-height: 1.65; color: var(--on-paper-mid); max-width: 60ch; }
+    /* Axis labels share the track's 20 columns so each sits over its meeting. */
+    .plan-axis .ticks { display: grid; grid-template-columns: repeat(20, minmax(0, 1fr)); gap: 3px; white-space: nowrap; }
+    .plan-axis .ticks span:nth-child(2) { grid-column: 10; }
+    .plan-axis .ticks span:nth-child(3) { grid-column: 20; justify-self: end; }
+    .phase {
+      padding: var(--s-5) 0;
+      border-top: 1px solid var(--paper-line);
+    }
+    .phase h3 { font-size: 18px; letter-spacing: -0.02em; margin-bottom: var(--s-1); }
+    .phase p { font-size: var(--t-sm); line-height: 1.6; color: var(--on-paper-mid); max-width: 46ch; }
+    /* One slot per meeting; this phase's meetings are filled in. */
+    .track {
+      display: grid;
+      grid-template-columns: repeat(20, minmax(0, 1fr));
+      gap: 3px;
+    }
+    .track i { height: 12px; border-radius: 2px; background: var(--paper-line); }
+    .track i.on { background: var(--signal); }
     .year-close {
       margin-top: clamp(var(--s-8), 4vw, var(--s-12));
-      padding-top: var(--s-6);
-      border-top: 2px solid var(--signal);
       max-width: 60ch;
       font-family: var(--font-display);
       font-size: clamp(18px, 2vw, 21px);
@@ -740,42 +648,17 @@
     }
 
     /* ═══════════════════════════════════════
-       HOW IT WORKS  (a real sequence, so it counts)
+       LEADERSHIP  (hidden until the club is approved)
        ═══════════════════════════════════════ */
-    .steps { display: flex; flex-direction: column; gap: var(--s-3); list-style: none; }
-    .step {
-      display: grid;
-      grid-template-columns: 52px 1fr auto;
-      align-items: center;
-      gap: clamp(var(--s-4), 3vw, var(--s-8));
-      padding: var(--s-6);
-      background: var(--paper-raise);
-      border: 1px solid var(--paper-line);
-      border-radius: var(--r-lg);
-      transition: border-color var(--dur-base) var(--ease),
-                  transform var(--dur-base) var(--ease);
+    #team { border-top: 1px solid var(--paper-line); }
+    .team-inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: var(--s-8);
     }
-    .step:hover { border-color: var(--signal); transform: translateX(4px); }
-    /* 24px and up, so red is allowed here. */
-    .step-num {
-      font-family: var(--font-display);
-      font-size: 26px;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      color: var(--signal);
-      line-height: 1;
-    }
-    .step h3 { font-size: 18px; letter-spacing: -0.02em; margin-bottom: var(--s-1); }
-    .step p { font-size: var(--t-sm); line-height: 1.65; color: var(--on-paper-mid); }
-    .step-when {
-      font-family: var(--font-display);
-      font-size: var(--t-label);
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--on-paper-dim);
-      white-space: nowrap;
-    }
+    .team-inner .lede { margin-top: var(--s-4); }
 
     /* ═══════════════════════════════════════
        CTA
@@ -795,15 +678,6 @@
       line-height: 1.7;
     }
     .follow-actions { margin-top: var(--s-10); }
-    .handle {
-      display: block;
-      margin-top: var(--s-6);
-      font-family: var(--font-display);
-      font-size: 14px;
-      font-weight: 500;
-      letter-spacing: 0.02em;
-      color: var(--on-ink-mid);
-    }
 
     /* ═══════════════════════════════════════
        FOOTER
@@ -817,21 +691,17 @@
       justify-content: space-between;
       align-items: center;
       font-family: var(--font-display);
-      font-size: var(--t-label);
+      font-size: 14px;
       font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
       color: var(--on-ink-dim);
     }
-    footer a { color: var(--on-ink-mid); text-decoration: none; transition: color var(--dur-fast) var(--ease-io); }
+    footer a { color: var(--on-ink-mid); text-decoration: none; }
     footer a:hover { color: var(--signal-lit); }
     .footer-note {
       flex-basis: 100%;
       font-family: var(--font-body);
       font-size: 13px;
       font-weight: 400;
-      letter-spacing: 0;
-      text-transform: none;
       color: var(--on-ink-dim);
     }
 
@@ -861,12 +731,8 @@
 
     @media (max-width: 640px) {
       :root { --t-body: 16px; }
-      /* The slashes only read as separators on one line. */
-      .hero-meta .sep { display: none; }
-      .hero-meta { gap: var(--s-2) var(--s-4); }
-      .step { grid-template-columns: 40px 1fr; row-gap: var(--s-2); }
-      .step-when { grid-column: 2; }
-      .step:hover { transform: none; }
+      .plan-axis { display: none; }
+      .phase { grid-template-columns: 1fr; gap: var(--s-3); }
       footer { flex-direction: column; text-align: center; gap: var(--s-3); }
     }
 
@@ -896,7 +762,6 @@
       <li><a href="#what">What we do</a></li>
       <li><a href="#basics">Basics</a></li>
       <li><a href="#year">The year</a></li>
-      <li><a href="#how">How it works</a></li>
       <li class="nav-follow-li"><a href="#follow" class="nav-follow">Follow</a></li>
     </ul>
   </nav>
@@ -907,11 +772,8 @@
     <div class="hero-inner">
       <div class="hero-copy">
         <div class="hero-meta rise d1">
-          <span>Greenwich High School</span>
-          <span class="sep" aria-hidden="true">/</span>
-          <span>Est. 2026</span>
-          <span class="sep" aria-hidden="true">/</span>
-          <span class="status">Pending approval</span>
+          <span>Greenwich High School, est. 2026</span>
+          <span class="status">Pending school approval</span>
         </div>
         <h1 class="rise d2">
           Everyone has AI.<br />
@@ -944,14 +806,13 @@
     <div class="container">
       <div class="about-grid">
         <div class="about-copy reveal">
-          <div class="eyebrow">About the club</div>
-          <h2>AI is here. <span class="lit">Learn to make it work.</span></h2>
+          <h2>A club for getting things done with AI.</h2>
           <p>
-            AI Applied is a club for students and faculty who want AI to be useful in their
-            real lives. Every meeting you build something and leave with a skill you can use
-            the next day, for school, creative projects, and the work you want to do after.
-            No lectures. No slide decks full of definitions. Just the tools, a real task, and
-            time to get it done.
+            AI Applied is for students and faculty who want AI to be useful in their
+            everyday lives. Every meeting you build something and leave with a skill you can
+            use the next day, for school, creative projects, and the work you want to do after.
+            There are no lectures. You bring the laptop, we bring a task, and you finish it
+            before the bell.
           </p>
         </div>
 
@@ -976,25 +837,20 @@
   <section id="what" class="paper">
     <div class="container">
       <div class="section-head centered reveal">
-        <div class="eyebrow centered">What we do</div>
-        <h2>Three things. <span class="lit">Done well.</span></h2>
-        <p class="lede">Every session is built around one of these. All practical, all useful outside the room.</p>
+        <h2>Every meeting does one of three things.</h2>
       </div>
       <div class="pillars">
         <div class="pillar reveal">
-          <div class="pillar-tag">Tools</div>
           <h3>Master the tools</h3>
           <p>Learn what ChatGPT, Gemini, NotebookLM, Perplexity, and Claude each do best, and how to get real work out of them.</p>
         </div>
         <div class="pillar reveal">
-          <div class="pillar-tag">Build</div>
           <h3>Build with AI</h3>
           <p>Make a study tutor, a personal assistant, a creative piece, and a small web tool, with AI doing the heavy lifting and you steering.</p>
         </div>
         <div class="pillar reveal">
-          <div class="pillar-tag">Integrate</div>
           <h3>Make it a habit</h3>
-          <p>The goal isn't to be impressed by AI. It's to make it a normal part of how you study, create, and solve problems.</p>
+          <p>Stop treating it as a novelty. Use it every day to study, make things, and work through problems.</p>
         </div>
       </div>
     </div>
@@ -1004,8 +860,7 @@
   <section id="basics" class="screen">
     <div class="container">
       <div class="section-head centered reveal">
-        <div class="eyebrow centered">Computer basics</div>
-        <h2>New to this? <span class="lit">Start here.</span></h2>
+        <h2>New to computers? Start here.</h2>
         <p class="lede">No experience needed. These are the computer skills that make AI tools easier to use, and you'll pick them up as we go.</p>
       </div>
 
@@ -1024,7 +879,7 @@
           </div>
           <div>
             <h3>Terminal</h3>
-            <p>A text window that controls your whole computer. It looks intimidating. It isn't. You'll be running commands in the first session.</p>
+            <p>A text window that controls your whole computer. It looks harder than it is. You'll run your first commands in week one.</p>
           </div>
         </article>
 
@@ -1041,7 +896,7 @@
           </div>
           <div>
             <h3>Finder and File Explorer</h3>
-            <p>Where your files actually live. Organize your projects, stop losing things in Downloads, and navigate your computer like you own it.</p>
+            <p>Where your files actually live. Organize your projects, stop losing things in Downloads, and find anything in seconds.</p>
           </div>
         </article>
 
@@ -1057,7 +912,7 @@
           </div>
           <div>
             <h3>File paths</h3>
-            <p>What does /Users/you/Documents actually mean? Once it clicks you'll wonder how you got by without it. Takes about five minutes.</p>
+            <p>What does /Users/you/Documents actually mean? It's the address of a file, and it takes five minutes to learn to read one.</p>
           </div>
         </article>
 
@@ -1073,7 +928,7 @@
           </div>
           <div>
             <h3>Keyboard shortcuts</h3>
-            <p>The ones everyone knows, plus the ones that actually save time. Copy, undo, switch apps, screenshot. Small habits, big difference.</p>
+            <p>The ones everyone knows, plus the ones that actually save time. Copy, undo, switch apps, screenshot.</p>
           </div>
         </article>
 
@@ -1108,7 +963,7 @@
           </div>
           <div>
             <h3>Browser DevTools</h3>
-            <p>Right-click any website and look inside it. You can see exactly how it was built. Most people have no idea this exists.</p>
+            <p>Right-click any website and look inside it. You can see exactly how it was built, and change it on your screen.</p>
           </div>
         </article>
 
@@ -1120,84 +975,79 @@
   <section id="year" class="paper">
     <div class="container">
       <div class="section-head reveal">
-        <div class="eyebrow">The plan, year one</div>
-        <h2>A year of getting <span class="lit">good at it.</span></h2>
-        <p class="lede">Most meetings stand alone, so you can jump in anywhere and still leave with something. This plan is pending school approval and may change.</p>
+        <h2>A year of getting good at it.</h2>
+        <p class="lede">Twenty meetings in seven phases. Most stand alone, so you can join at any point and still leave with something. The plan may change once the school reviews it.</p>
       </div>
-      <ol class="phases" role="list">
+      <div class="plan-axis" aria-hidden="true">
+        <span></span>
+        <span class="ticks"><span>Meeting 1</span><span>10</span><span>20</span></span>
+      </div>
+      <ol class="plan" role="list">
         <li class="phase reveal">
-          <div class="step-num" aria-hidden="true">01</div>
-          <h3>Get set up</h3>
-          <p>Accounts, prompts that work, and picking the right tool for the job.</p>
+          <div>
+            <h3>Get set up</h3>
+            <p>Accounts, prompts that work, and picking the right tool for the job.</p>
+          </div>
+          <div class="track" data-from="1" data-to="3" role="img" aria-label="Meetings 1 to 3 of 20"></div>
         </li>
         <li class="phase reveal">
-          <div class="step-num" aria-hidden="true">02</div>
-          <h3>School</h3>
-          <p>Study kits, an AI tutor for your hardest class, and research with real sources. Study, not answers: AI as tutor and quizzer, never doing graded work.</p>
+          <div>
+            <h3>School</h3>
+            <p>Study kits, an AI tutor for your hardest class, and research with sources you check. AI as tutor and quizzer, never doing graded work.</p>
+          </div>
+          <div class="track" data-from="4" data-to="6" role="img" aria-label="Meetings 4 to 6 of 20"></div>
         </li>
         <li class="phase reveal">
-          <div class="step-num" aria-hidden="true">03</div>
-          <h3>Make it yours</h3>
-          <p>An assistant tuned to your life, and one chore automated.</p>
+          <div>
+            <h3>Make it yours</h3>
+            <p>An assistant tuned to your life, and one chore automated.</p>
+          </div>
+          <div class="track" data-from="7" data-to="9" role="img" aria-label="Meetings 7 to 9 of 20"></div>
         </li>
         <li class="phase reveal">
-          <div class="step-num" aria-hidden="true">04</div>
-          <h3>Create</h3>
-          <p>Images, design, video, audio, and writing.</p>
+          <div>
+            <h3>Create</h3>
+            <p>Images, design, video, audio, and writing.</p>
+          </div>
+          <div class="track" data-from="10" data-to="11" role="img" aria-label="Meetings 10 to 11 of 20"></div>
         </li>
         <li class="phase reveal">
-          <div class="step-num" aria-hidden="true">05</div>
-          <h3>Work and careers</h3>
-          <p>Docs, Sheets, and Slides, interview practice, and how AI shows up in real jobs.</p>
+          <div>
+            <h3>Work and careers</h3>
+            <p>Docs, Sheets, and Slides, interview practice, and how AI shows up in the jobs you want.</p>
+          </div>
+          <div class="track" data-from="12" data-to="15" role="img" aria-label="Meetings 12 to 15 of 20"></div>
         </li>
         <li class="phase reveal">
-          <div class="step-num" aria-hidden="true">06</div>
-          <h3>Build</h3>
-          <p>A web page AI helps you write, live on the internet.</p>
+          <div>
+            <h3>Build</h3>
+            <p>A web page AI helps you write, live on the internet.</p>
+          </div>
+          <div class="track" data-from="16" data-to="17" role="img" aria-label="Meetings 16 to 17 of 20"></div>
         </li>
         <li class="phase reveal">
-          <div class="step-num" aria-hidden="true">07</div>
-          <h3>Project arc</h3>
-          <p>Pick one piece, push it further, and show your portfolio.</p>
+          <div>
+            <h3>Project arc</h3>
+            <p>Pick one piece, push it further, and show your portfolio.</p>
+          </div>
+          <div class="track" data-from="18" data-to="20" role="img" aria-label="Meetings 18 to 20 of 20"></div>
         </li>
       </ol>
       <p class="year-close reveal">Everything you make goes in your portfolio. By the end of the year it holds a personal assistant, a study system, a creative piece, and a live web tool.</p>
     </div>
   </section>
 
-  <!-- HOW IT WORKS -->
-  <section id="how" class="paper ruled">
+  <!-- LEADERSHIP
+       To take it down, add the word hidden to the section tag. -->
+  <section id="team" class="paper">
     <div class="container">
-      <div class="section-head reveal">
-        <div class="eyebrow">How it works</div>
-        <h2>Simple as <span class="lit">that.</span></h2>
+      <div class="team-inner reveal">
+        <div>
+          <h2>Help run the club.</h2>
+          <p class="lede">We're picking a small leadership team to plan meetings, teach, and run the club's Instagram. Apply through a short Google Form.</p>
+        </div>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfxLlHZq_fVf6PpITuWfpw6X4vjnwfe4ZvbgnAKYLqPpkowcQ/viewform" class="btn btn-primary" target="_blank" rel="noopener">Apply for a position</a>
       </div>
-      <ol class="steps" role="list">
-        <li class="step reveal">
-          <div class="step-num" aria-hidden="true">01</div>
-          <div>
-            <h3>Join when we launch</h3>
-            <p>The club is waiting on school approval. Follow the Instagram and you'll know the moment sign-ups open.</p>
-          </div>
-          <div class="step-when">Coming soon</div>
-        </li>
-        <li class="step reveal">
-          <div class="step-num" aria-hidden="true">02</div>
-          <div>
-            <h3>Show up and build</h3>
-            <p>Once approved, meetings run Fridays at 7:20am in Room 312, each with one goal and one thing to make.</p>
-          </div>
-          <div class="step-when">Every session</div>
-        </li>
-        <li class="step reveal">
-          <div class="step-num" aria-hidden="true">03</div>
-          <div>
-            <h3>Actually use it</h3>
-            <p>These aren't club skills, they're life skills. Use them in every class, every project, and every job after.</p>
-          </div>
-          <div class="step-when">From then on</div>
-        </li>
-      </ol>
     </div>
   </section>
 
@@ -1205,16 +1055,13 @@
   <section id="follow" class="screen">
     <div class="container">
       <div class="follow-inner reveal">
-        <div class="eyebrow centered">Get in early</div>
-        <h2>AI isn't slowing down. <span class="lit">Neither are we.</span></h2>
+        <h2>Sign-ups open when the school approves us.</h2>
         <p class="follow-body">
-          We post what we're building and we'll announce the moment sign-ups open.
-          Following is the only thing to do right now.
+          We'll announce it on Instagram first. Until then, follow along to see what we're building.
         </p>
         <div class="follow-actions">
           <a href="https://instagram.com/aiapplied_ghs" class="btn btn-primary" target="_blank" rel="noopener">Follow on Instagram</a>
         </div>
-        <span class="handle">@aiapplied_ghs</span>
       </div>
     </div>
   </section>
@@ -1223,7 +1070,7 @@
   <!-- FOOTER -->
   <footer>
     <span>AI Applied</span>
-    <span>Greenwich High School / Est. 2026</span>
+    <span>Greenwich High School, est. 2026</span>
     <a href="https://instagram.com/aiapplied_ghs" target="_blank" rel="noopener">@aiapplied_ghs</a>
     <p class="footer-note">Logos are trademarks of their respective owners. AI Applied is not affiliated with them.</p>
   </footer>
@@ -1251,6 +1098,16 @@
     } else {
       reveals.forEach(function (r) { r.classList.add('visible'); });
     }
+
+    // Each year track gets 20 slots, one per meeting; the phase's own meetings are filled in.
+    document.querySelectorAll('.track').forEach(function (t) {
+      var from = +t.dataset.from, to = +t.dataset.to;
+      for (var i = 1; i <= 20; i++) {
+        var slot = document.createElement('i');
+        if (i >= from && i <= to) slot.className = 'on';
+        t.appendChild(slot);
+      }
+    });
   </script>
 </body>
 </html>
